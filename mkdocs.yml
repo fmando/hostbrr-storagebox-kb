@@ -8,7 +8,9 @@ theme:
 
 nav:
   - Start: index.md
-  - Grundlagen: 01-grundlagen/index.md
+  - Grundlagen:
+      - Übersicht: 01-grundlagen/index.md
+      - Was ist die StorageBox?: 01-grundlagen/was-ist-die-storagebox.md
   - Zugang: 02-zugang/index.md
   - Backup: 03-backup/index.md
   - Mounts: 04-mounts/index.md
