@@ -4,68 +4,159 @@ category: backup
 status: community-reported
 last_reviewed: 2026-08-24
 ---
-
 # Backup mit rsync
 
-`rsync` ist für die HostBrr StorageBox besonders interessant, weil HostBrr rsync/SSH als Teil des StorageBox-Angebots nennt und es in der Community für automatisierte Backups eingesetzt wird.
+`rsync` ist für HostBrr besonders interessant, weil SSH/rsync offiziell zum StorageBox-Zugangsmodell gehört. Es ist schnell, transparent und hervorragend für Dateiübertragung – aber **rsync allein ist nicht automatisch ein versioniertes Backup-System**.
 
-## Zwei mögliche Richtungen
+## Architektur
 
-### Push: Server → StorageBox
-
-Der zu sichernde Server startet die Verbindung:
-
-```bash
-rsync -aH --info=progress2 /srv/daten/ hostbrr-storage:backup/server1/
+```text
+Server
+  ↓ rsync über SSH
+HostBrr StorageBox
 ```
 
-Das ist konzeptionell einfach, bedeutet aber, dass der Quellserver Zugangsdaten bzw. einen Schlüssel mit Schreibzugriff auf die StorageBox besitzt.
+## Voraussetzungen
 
-### Pull: StorageBox → Server
+- rsync lokal
+- rsync auf der StorageBox erreichbar
+- SSH-Zugang
+- vorzugsweise SSH-Key
+- festgelegter Zielpfad
 
-In Community-Berichten wird auch der umgekehrte Weg beschrieben: Ein Cronjob auf der StorageBox zieht Daten per SSH/rsync vom Quellserver. Das kann die Auswirkungen kompromittierter Zugangsdaten anders verteilen und ist für bestimmte Backup-Designs interessant.
-
-Das genaue Kommando hängt vom HostBrr-Shell-/Cron-Umfang und den Pfaden ab und wird vor Kennzeichnung als `verified` auf einer aktuellen Box getestet.
-
-## Wichtiger Hinweis zu `--delete`
-
-Ein Kommando wie
+Zuerst prüfen:
 
 ```bash
-rsync -a --delete /quelle/ hostbrr-storage:backup/
+ssh hostbrr-storage 'rsync --version'
 ```
 
-ist **eine Synchronisation und noch keine belastbare Backup-Historie**. Wird eine Datei lokal versehentlich gelöscht oder beschädigt, kann dieser Zustand beim nächsten Lauf auf das Ziel übertragen werden.
+Client- und Serverversion dokumentieren.
 
-Für echte Versionierung sind beispielsweise Restic oder Borg beziehungsweise eine zusätzliche Snapshot-/Generationenstrategie geeigneter.
+## Push: Server → StorageBox
+
+```bash
+rsync -aH --info=progress2 \
+  /srv/daten/ \
+  hostbrr-storage:backup/server1/current/
+```
+
+Das ist einfach und gut für Spiegel-/Kopieraufgaben. Der Quellserver besitzt dabei Schreibzugriff auf das Backupziel.
+
+## Pull: StorageBox → Server
+
+Wenn HostBrr-Cron und Shellumfang es erlauben, kann die StorageBox Daten auch vom Quellserver ziehen. Dieses Modell ist sicherheitstechnisch interessant, muss aber auf der aktuellen Box praktisch geprüft werden.
+
+## `--delete` mit Vorsicht
+
+```bash
+rsync -a --delete /quelle/ hostbrr-storage:backup/current/
+```
+
+spiegelt auch Löschungen. Das ist Synchronisation, keine historische Sicherung. Ein lokaler Bedienfehler oder kompromittierter Datenbestand kann dadurch auf das Ziel übertragen werden.
+
+Vor riskanten Änderungen zuerst:
+
+```bash
+rsync -a --delete --dry-run /quelle/ hostbrr-storage:backup/current/
+```
+
+## Einfache Generationen mit `--backup-dir`
+
+rsync kann ersetzte oder gelöschte Dateien in ein separates Verzeichnis verschieben:
+
+```bash
+STAMP=$(date +%F-%H%M)
+rsync -a --delete \
+  --backup \
+  --backup-dir="../versions/$STAMP" \
+  /srv/daten/ \
+  hostbrr-storage:backup/server1/current/
+```
+
+Damit entsteht eine einfache Historie. Sie ersetzt aber nicht automatisch die komfortablen Snapshot-, Retention- und Integritätsfunktionen von Restic/Kopia/Borg.
+
+## `--link-dest`
+
+rsync kann unveränderte Dateien über Hardlinks aus einer vorherigen Generation übernehmen. Das ermöglicht klassische Snapshot-Verzeichnisbäume mit geringem Mehrverbrauch.
+
+Ob dieses Modell auf HostBrr für große Backups sinnvoll und vollständig kompatibel ist, muss praktisch getestet werden – insbesondere Hardlink-Verhalten, Quota-Abrechnung und Performance bei sehr vielen Dateien.
+
+## Integrität
+
+rsync verifiziert übertragene Dateien während des Transfers. Für einen späteren Audit eines bereits vorhandenen Datenbestands kann ein checksum-basierter Vergleich sinnvoll sein:
+
+```bash
+rsync -aHnc /srv/daten/ hostbrr-storage:backup/server1/current/
+```
+
+`-c/--checksum` kann bei großen Datenbeständen teuer sein, da beide Seiten Dateiinhalte lesen müssen. Nicht bei jedem täglichen Lauf blind aktivieren.
+
+## Restore
+
+```bash
+mkdir -p /srv/restore-test
+rsync -aH \
+  hostbrr-storage:backup/server1/current/ \
+  /srv/restore-test/
+```
+
+Anschließend Anwendung, Dateirechte und bei kritischen Daten zusätzliche Checks prüfen.
 
 ## Automatisierung
 
-DirectAdmin unterstützt Cronjobs, sofern die Funktion für den Account freigeschaltet ist. Für unbeaufsichtigte Jobs sollte SSH-Key-Authentifizierung verwendet werden; private Schlüssel dürfen nicht im Repository oder in Cron-Kommandos mit Klartext-Secrets landen.
+Cron oder systemd timer eignen sich gut. Ein produktiver Job braucht mindestens:
 
-## Restore gehört zum Howto
+- Logging
+- Exit-Code-Auswertung
+- Fehlerbenachrichtigung
+- Schutz vor parallelen Läufen
+- gelegentlichen Restore-Test
 
-Ein Backup gilt erst dann als praktisch brauchbar, wenn der Rückweg dokumentiert ist. Beispiel:
+## Sicherheit
+
+rsync über SSH schützt den Transport, verschlüsselt die Dateien aber **nicht clientseitig auf dem Ziel**. Wer verschlüsselte Daten auf der StorageBox benötigt, sollte beispielsweise Restic/Kopia/Borg oder rclone crypt einsetzen.
+
+Ein kompromittierter Push-Server mit Schreib-/Löschrechten kann auch das rsync-Ziel verändern. Generationen helfen gegen Bedienfehler, ersetzen aber keine unabhängige Kopie.
+
+## Typische Fehler
+
+### `rsync: command not found`
+
+Serverseitige Verfügbarkeit und PATH prüfen:
 
 ```bash
-rsync -aH hostbrr-storage:backup/server1/ /srv/restore-test/
+ssh hostbrr-storage 'command -v rsync; rsync --version'
 ```
 
-Anschließend sollten Dateianzahl, Größen und bei wichtigen Daten Checksums geprüft werden.
+### Permission denied
 
-## Weiterführende Dokumentation
+Zielpfad, SSH-Key und Schreibrechte prüfen. Nicht automatisch mit großzügigeren Dateirechten lösen.
 
-- [rsync – offizielle Projektseite](https://rsync.samba.org/)
-- [rsync Manual](https://download.samba.org/pub/rsync/rsync.1)
-- [DirectAdmin Docs – Managing server over SSH](https://docs.directadmin.com/operation-system-level/os-general/managing-with-ssh.html)
-- [DirectAdmin Docs – Cronjobs](https://docs.directadmin.com/webservices/cronjobs.html)
+### `--link-dest` spart keinen Platz
 
-## HostBrr-spezifischer Status
+Hardlinks, Attribute, Pfade und HostBrr-Dateisystemverhalten prüfen. Erst nach Praxistest als empfohlene HostBrr-Strategie verwenden.
 
-| Punkt | Status |
-|---|---|
-| SSH/SFTP | offiziell angeboten |
-| rsync | offiziell angeboten |
-| rsync per SSH | Community-erprobt |
-| Cron auf StorageBox | Community-erprobt, Account-Freigabe prüfen |
-| Restore | noch selbst zu testen |
+## HostBrr-spezifisch noch zu testen
+
+- installierte rsync-Version 2 TB vs. 8 TB
+- Push und Pull
+- Cron auf der StorageBox
+- `--backup-dir`
+- `--link-dest` und Hardlinks
+- Quota-Verhalten von Hardlinks
+- `--checksum` bei großen Datenmengen
+- Restore mit Rechten/Zeitstempeln
+- 10.000+ kleine Dateien
+
+## Einordnung
+
+**Sehr gut für:** transparente Kopien, Spiegel, einfache Server-Transfers und selbst gebaute Generationen.
+
+**Weniger gut für:** Nutzer, die ohne eigene Skriptlogik Verschlüsselung, Deduplizierung, Snapshot-Retention und Repository-Verifikation wünschen. Dafür sind Restic oder Kopia meist einfacher.
+
+## Primärquellen
+
+- https://rsync.samba.org/
+- https://rsync.samba.org/ftp/rsync/rsync.1.html
+- https://docs.directadmin.com/operation-system-level/os-general/managing-with-ssh.html
+- https://docs.directadmin.com/webservices/cronjobs.html
