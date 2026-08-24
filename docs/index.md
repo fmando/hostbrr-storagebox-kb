@@ -67,13 +67,20 @@ Deutschsprachige, quellenbasierte Wissensdatenbank zur **HostBrr StorageBox** �
 - [Softaculous](02-zugang/directadmin-softaculous.md)
 - [API & Automatisierung](02-zugang/directadmin-api.md)
 
-## Qualitätsstufen
+## Statusmodell
+
+Die vorhandenen Dokumente verwenden das Frontmatter-Feld `status` sowohl für redaktionellen Reifegrad als auch für den Evidenzgrad HostBrr-spezifischer Aussagen. Zulässige Werte sind:
 
 | Status | Bedeutung |
 |---|---|
-| `official` | durch HostBrr bzw. eine Primärquelle dokumentiert |
-| `community-reported` | Community-Bericht, noch nicht selbst geprüft |
+| `maintained` | redaktionell gepflegter Artikel |
+| `draft` | inhaltlicher Entwurf, noch nicht vollständig |
+| `research` | Recherche-/Bewertungsphase |
+| `official` | Kernaussagen durch HostBrr bzw. eine Primärquelle dokumentiert |
+| `community-reported` | HostBrr-spezifische Praxisangabe aus Community-Berichten, noch nicht selbst geprüft |
 | `verified` | praktisch auf einer aktuellen StorageBox selbst getestet |
 | `deprecated` | veraltet oder einer älteren Produktgeneration zuzuordnen |
+
+Langfristig kann das Frontmatter in getrennte Felder für **Dokumentreife** und **Evidenzstatus** aufgeteilt werden. Bis dahin sind die oben genannten Werte die gemeinsame Konvention.
 
 Aussagen aus Foren werden nicht ungeprüft zu Fakten erklärt. Relevante Fundstellen werden unter `sources/` dokumentiert und anschließend in die eigentliche Dokumentation konsolidiert. Eigene praktische Tests folgen in einer späteren Phase.
