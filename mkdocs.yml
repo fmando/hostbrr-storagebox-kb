@@ -68,6 +68,11 @@ nav:
       - Backup-Tools: 08-troubleshooting/backup-tools.md
       - Transfers & Mounts: 08-troubleshooting/performance-mounts.md
       - Nextcloud: 08-troubleshooting/nextcloud.md
+  - Rezepte & Howtos:
+      - Übersicht: 09-rezepte/index.md
+      - VPS mit Restic sichern: 09-rezepte/vps-restic.md
+      - Proxmox vzdump + rclone crypt: 09-rezepte/proxmox-vzdump-rclone-crypt.md
+      - Cloud-Laufwerk mit Cache: 09-rezepte/cloud-drive-cache.md
 
 markdown_extensions:
   - tables
