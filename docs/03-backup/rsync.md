@@ -2,7 +2,7 @@
 title: Backup mit rsync
 category: backup
 status: community-reported
-last_reviewed: 2026-08-24
+last_reviewed: 2026-08-25
 ---
 # Backup mit rsync
 
@@ -112,6 +112,8 @@ Cron oder systemd timer eignen sich gut. Ein produktiver Job braucht mindestens:
 - Schutz vor parallelen Läufen
 - gelegentlichen Restore-Test
 
+DirectAdmin zeigt Cronjobs auf User-Ebene unter **Advanced Features → Cron Jobs**. Eine aktuelle offizielle DirectAdmin-Referenz dazu ist beispielsweise die [Changelog-Dokumentation zu Cronjob-Verbesserungen](https://docs.directadmin.com/changelog/version-1.649.html).
+
 ## Sicherheit
 
 rsync über SSH schützt den Transport, verschlüsselt die Dateien aber **nicht clientseitig auf dem Ziel**. Wer verschlüsselte Daten auf der StorageBox benötigt, sollte beispielsweise Restic/Kopia/Borg oder rclone crypt einsetzen.
@@ -159,4 +161,4 @@ Hardlinks, Attribute, Pfade und HostBrr-Dateisystemverhalten prüfen. Erst nach 
 - https://rsync.samba.org/
 - https://rsync.samba.org/ftp/rsync/rsync.1.html
 - https://docs.directadmin.com/operation-system-level/os-general/managing-with-ssh.html
-- https://docs.directadmin.com/webservices/cronjobs.html
+- https://docs.directadmin.com/changelog/version-1.649.html
