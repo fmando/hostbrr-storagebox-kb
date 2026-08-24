@@ -1,0 +1,24 @@
+site_name: HostBrr StorageBox Knowledge Base
+site_description: Deutschsprachige, quellenbasierte Dokumentation zur HostBrr StorageBox
+repo_url: https://github.com/fmando/hostbrr-storagebox-kb
+repo_name: fmando/hostbrr-storagebox-kb
+
+theme:
+  name: mkdocs
+
+nav:
+  - Start: index.md
+  - Grundlagen: 01-grundlagen/index.md
+  - Zugang: 02-zugang/index.md
+  - Backup: 03-backup/index.md
+  - Mounts: 04-mounts/index.md
+  - Anwendungen: 05-anwendungen/index.md
+  - Sicherheit: 06-sicherheit/index.md
+  - Performance: 07-performance/index.md
+  - Troubleshooting: 08-troubleshooting/index.md
+
+markdown_extensions:
+  - tables
+  - fenced_code
+  - toc:
+      permalink: true
