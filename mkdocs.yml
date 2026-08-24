@@ -13,14 +13,19 @@ nav:
       - Was ist die StorageBox?: 01-grundlagen/was-ist-die-storagebox.md
   - Zugang:
       - Übersicht: 02-zugang/index.md
-      - SSH und SFTP: 02-zugang/ssh-sftp.md
+      - SSH & SFTP: 02-zugang/ssh-sftp.md
   - Backup:
       - Übersicht: 03-backup/index.md
       - Kompatibilitätsmatrix: 03-backup/kompatibilitaetsmatrix.md
       - rsync: 03-backup/rsync.md
       - rclone + SFTP + crypt: 03-backup/rclone-sftp-crypt.md
+      - BorgBackup: 03-backup/borg.md
+      - Restic: 03-backup/restic.md
       - Proxmox: 03-backup/proxmox.md
-  - Mounts: 04-mounts/index.md
+  - Mounts:
+      - Übersicht: 04-mounts/index.md
+      - Linux: 04-mounts/linux.md
+      - Windows mit SSHFS: 04-mounts/windows-sshfs.md
   - Anwendungen:
       - Übersicht: 05-anwendungen/index.md
       - Nextcloud: 05-anwendungen/nextcloud.md
