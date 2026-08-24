@@ -39,6 +39,7 @@ nav:
       - rclone + SFTP + crypt: 03-backup/rclone-sftp-crypt.md
       - BorgBackup: 03-backup/borg.md
       - Restic: 03-backup/restic.md
+      - Kopia: 03-backup/kopia.md
       - Proxmox: 03-backup/proxmox.md
   - Mounts:
       - Übersicht: 04-mounts/index.md
