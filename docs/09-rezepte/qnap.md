@@ -6,56 +6,138 @@ last_reviewed: 2026-08-24
 ---
 # QNAP NAS auf HostBrr sichern
 
-QNAPs **Hybrid Backup Sync (HBS 3)** unterstützt Remote-Server als Speicherziele, darunter rsync-Server und FTP/FTPS. Für HostBrr ist rsync der interessanteste native Ansatz, muss aber mit der konkreten StorageBox praktisch verifiziert werden.
+## Ziel
 
-## Zielbild
+Ein QNAP NAS soll automatisiert auf eine HostBrr StorageBox sichern. Der native Ausgangspunkt ist **Hybrid Backup Sync (HBS 3)** mit einem Remote-rsync-Ziel. Die konkrete Kompatibilität mit der aktuellen StorageBox-Generation wird später praktisch verifiziert.
+
+## Architektur
 
 ```text
 QNAP NAS
-  ↓ HBS 3
-rsync / verschlüsselte Verbindung
+  ↓ HBS 3 / Backupjob
+rsync / Remote-Verbindung
   ↓
 HostBrr StorageBox
 ```
 
+## Voraussetzungen
+
+Vorher dokumentieren:
+
+- HostBrr-Hostname
+- Benutzername
+- SSH-/rsync-Port
+- Zielpfad
+- verfügbare Quota
+- HBS-3-Version
+- gewünschte Retention
+- Verschlüsselungsstrategie
+
 Offizielle Dokumentation:
 
-- QNAP HBS 3 Schnellstart: https://www.qnap.com/de-de/how-to/tutorial/article/hbs-hybrid-backup-sync-schnellstartanleitung
+- QNAP HBS 3: https://www.qnap.com/de-de/software/hybrid-backup-sync
+- HBS 3 Schnellstart: https://www.qnap.com/de-de/how-to/tutorial/article/hbs-hybrid-backup-sync-schnellstartanleitung
 - Remote-Server als Speicherplatz: https://docs.qnap.com/application/hybrid-backup-sync/3v21.x/de-de/einen-speicherplatz-auf-einem-remote-server-erstellen-9B6F1BA0.html
 
-## Storage Space anlegen
+## 1. Remote-Speicherplatz anlegen
 
-In HBS 3 wird zunächst ein Remote-Speicherplatz angelegt. Benötigt werden je nach Modus:
+In HBS 3 zunächst einen Remote-Speicherplatz anlegen. Je nach gewähltem Modus werden Hostname, Port, Benutzer, Authentifizierung und Zielpfad benötigt.
 
-- Hostname/IP
+Den integrierten **Verbindungstest** verwenden. Falls die HBS-Version einen Speed-Test anbietet, den Wert dokumentieren; er ist später eine interessante Ergänzung zu unseren rclone-/SFTP-Messungen.
+
+## 2. Backup statt bloßem Sync
+
+Ein unidirektionaler Sync ist kein Ersatz für ein versioniertes Backup: Löschungen oder beschädigte Dateien können auf das Ziel repliziert werden.
+
+Für wichtige Daten deshalb einen echten HBS-Backupjob mit geeigneter Versionierung/Retention bevorzugen, soweit die gewählte Zielart diese Funktionen unterstützt.
+
+## 3. Verschlüsselung
+
+Transportverschlüsselung und Backupverschlüsselung sind getrennte Eigenschaften.
+
+Für sensible Daten sollte die Sicherung möglichst **vor dem Speichern auf HostBrr clientseitig verschlüsselt** werden. Wiederherstellungskennwörter/-schlüssel dürfen nicht ausschließlich auf dem QNAP liegen.
+
+## 4. Zeitplan und Retention
+
+Der Job sollte automatisch laufen und mindestens folgende Punkte festlegen:
+
+- Backupintervall
+- Aufbewahrungsregeln
+- Verhalten bei Fehlern
+- Benachrichtigung
+- verfügbare Quota auf der StorageBox
+
+Retention nicht durch manuelles Löschen unbekannter HBS-Metadaten auf dem Remote-Ziel ersetzen.
+
+## 5. Verifikation
+
+Nach der ersten Sicherung prüfen:
+
+1. Jobstatus und Logs in HBS 3.
+2. Plausible Datenmenge auf dem Ziel.
+3. Fehler-/Warnmeldungen.
+4. Einen echten Restore durchführen.
+
+Ein erfolgreicher Upload allein beweist noch nicht, dass das Backup vollständig wiederherstellbar ist.
+
+## 6. Restore-Test
+
+Minimaltest:
+
+1. Testordner mit mehreren Dateien sichern.
+2. Eine Datei verändern und eine löschen.
+3. Sicherung erneut ausführen.
+4. Gewünschte Version in ein **separates Restore-Verzeichnis** zurückholen.
+5. Dateinamen, Inhalte, Zeitstempel und – soweit relevant – Berechtigungen prüfen.
+
+Für kritische NAS-Daten sollte gelegentlich ein größerer Restore-Test erfolgen.
+
+## Sicherheit
+
+- eigenes HostBrr-Zielverzeichnis für das NAS
+- Backup-Credentials nicht für normale Administration wiederverwenden
+- Schlüssel/Passwörter separat sichern
+- StorageBox nicht als einzige Kopie wichtiger Daten behandeln
+- bei Ransomware bedenken: ein dauerhaft beschreibbares Remote-Ziel ist nicht automatisch immutable
+
+Siehe auch:
+
+- [3-2-1-Strategie](../06-sicherheit/3-2-1-strategie.md)
+- [Ransomware & Löschschutz](../06-sicherheit/ransomware-loeschschutz.md)
+
+## Typische Fehler
+
+### Verbindungstest schlägt fehl
+
+Prüfen:
+
+- Hostname
 - Port
 - Benutzer
-- Passwort bzw. unterstützte Authentifizierung
-- Zielpfad/rsync-Konfiguration
+- Authentifizierung
+- ob rsync auf der StorageBox verfügbar ist
+- ob HBS den von HostBrr bereitgestellten rsync-/SSH-Modus unterstützt
 
-HBS besitzt einen Verbindungstest und einen Speed-Test. Diese Messwerte sind später auch für unseren Performancevergleich interessant.
+### Job startet, bricht aber später ab
 
-## Backup statt Sync
+Dann zusätzlich Quota, Netzwerkabbrüche, Dateinamen, sehr große Dateien und HBS-Logs prüfen.
 
-Ein unidirektionaler Sync ist nicht automatisch ein versioniertes Backup. Für wichtige Daten sollte ein HBS-Backupjob mit geeigneter Versionierung/Retention bevorzugt werden, sofern die gewählte Zielart dies unterstützt.
+### Backup wächst unerwartet stark
 
-## Verschlüsselung
+Retention, Versionierung, Änderungsrate und temporäre/veränderliche Verzeichnisse prüfen. Nicht einfach remote Backupdateien löschen.
 
-Wenn sensible Daten auf einer Shared-Hosting-StorageBox liegen, sollte die Sicherung möglichst clientseitig verschlüsselt werden. Reine Transportverschlüsselung schützt nicht die ruhenden Daten vor einem kompromittierten Storage-Account oder Serverzugriff.
+## Fortgeschrittene Alternative
 
-## Alternative: rclone/restic im Container
+Auf geeigneten QNAP-Modellen kann eine kontrollierte Container-/Linux-Umgebung mit Restic oder rclone flexibler sein. Das ist aber stark modell- und firmwareabhängig und deshalb kein allgemeiner Standardweg dieser Anleitung.
 
-Auf leistungsfähigeren QNAP-Systemen kann ein Container oder eine andere kontrollierte Laufzeitumgebung mit rclone/restic flexibler sein als HBS. Das ist jedoch deutlich geräteabhängiger und wird als fortgeschrittene Variante separat behandelt.
+## HostBrr-spezifisch noch zu testen
 
-## Restore-Test
+Auf den realen Boxen prüfen wir später:
 
-Nach Einrichtung mindestens:
-
-1. Testordner sichern.
-2. Datei auf dem NAS verändern/löschen.
-3. ältere Version zurückholen.
-4. Prüfen, ob Dateinamen, Zeitstempel und Inhalte korrekt sind.
-
-## Noch zu verifizieren
-
-Wir prüfen später mit einer echten HostBrr-Box, welchen rsync-Modus HBS gegen die StorageBox zuverlässig akzeptiert und wie sich ein abweichender SSH-Port konfigurieren lässt.
+- welchen rsync-Modus HBS zuverlässig akzeptiert
+- abweichenden SSH-Port
+- Verhalten bei großen Dateien
+- Verhalten bei vielen kleinen Dateien
+- Resume nach Verbindungsabbruch
+- Restore-Durchsatz
+- Unterschiede zwischen 2-TB- und 8-TB-Box
