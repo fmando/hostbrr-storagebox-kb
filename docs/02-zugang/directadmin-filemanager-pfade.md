@@ -2,7 +2,7 @@
 title: "DirectAdmin: File Manager & Verzeichnisstruktur"
 category: zugang
 status: community-reported
-last_reviewed: 2026-08-24
+last_reviewed: 2026-08-25
 ---
 # DirectAdmin: File Manager & Verzeichnisstruktur
 
@@ -14,9 +14,15 @@ Pfade tauchen später bei rsync, rclone, Cronjobs, Nextcloud, Webhosting und Res
 
 ## File Manager
 
-DirectAdmin stellt einen webbasierten File Manager bereit. Er eignet sich für einzelne Dateien, Rechtekontrolle und schnelle Prüfungen. Für große Datenmengen sind SFTP, rsync oder rclone meist geeigneter.
+DirectAdmin stellt im Evolution-Skin einen webbasierten File Manager bereit. Er eignet sich für einzelne Dateien, Rechtekontrolle und schnelle Prüfungen. Für große Datenmengen sind SFTP, rsync oder rclone meist geeigneter.
 
-Offizielle Dokumentation: https://docs.directadmin.com/directadmin/general-usage/file-manager.html
+Aktuelle offizielle Referenzen:
+
+- [DirectAdmin – Evolution skin](https://docs.directadmin.com/directadmin/skins-and-templates/evolution.html)
+- [DirectAdmin – File-Manager-bezogene Konfigurationswerte](https://docs.directadmin.com/directadmin/general-usage/all-directadmin-conf-values.html)
+- [DirectAdmin 1.697 – aktuelle File-Manager-Änderungen](https://docs.directadmin.com/changelog/version-1.697.html)
+
+Eine frühere DirectAdmin-URL für eine dedizierte File-Manager-Seite liefert inzwischen 404 und wird deshalb nicht mehr verwendet.
 
 ## Typische Struktur
 
@@ -93,5 +99,6 @@ Auf einer realen StorageBox dokumentieren:
 
 ## Weiterführende Dokumentation
 
-- DirectAdmin Documentation: https://docs.directadmin.com/
-- DirectAdmin File Manager: https://docs.directadmin.com/directadmin/general-usage/file-manager.html
+- [DirectAdmin Documentation](https://docs.directadmin.com/)
+- [Evolution skin](https://docs.directadmin.com/directadmin/skins-and-templates/evolution.html)
+- [DirectAdmin File-Manager-Konfigurationswerte](https://docs.directadmin.com/directadmin/general-usage/all-directadmin-conf-values.html)
