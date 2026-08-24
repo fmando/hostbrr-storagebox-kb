@@ -27,6 +27,7 @@ nav:
       - SSH & SFTP: 02-zugang/ssh-sftp.md
   - Backup:
       - Übersicht: 03-backup/index.md
+      - Welche Methode?: 03-backup/welche-backup-methode.md
       - Kompatibilitätsmatrix: 03-backup/kompatibilitaetsmatrix.md
       - rsync: 03-backup/rsync.md
       - rclone + SFTP + crypt: 03-backup/rclone-sftp-crypt.md
