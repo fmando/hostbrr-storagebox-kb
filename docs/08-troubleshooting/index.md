@@ -2,7 +2,7 @@
 title: Troubleshooting
 category: troubleshooting
 status: maintained
-last_reviewed: 2026-08-24
+last_reviewed: 2026-08-25
 ---
 # Troubleshooting
 
@@ -27,7 +27,7 @@ Danach erst Konfiguration verändern.
 
 - [SSH & SFTP](ssh-sftp.md)
 - [DirectAdmin, Quota & Cron](directadmin-quota-cron.md)
-- [rclone, Restic, Borg & rsync](backup-tools.md)
+- [Backup-Tools: rclone, Restic, Kopia, Borg & rsync](backup-tools.md)
 - [Langsame Transfers & instabile Mounts](performance-mounts.md)
 - [Nextcloud](nextcloud.md)
 
