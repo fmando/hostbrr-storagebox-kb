@@ -1,43 +1,125 @@
 ---
 title: Backup-Kompatibilitätsmatrix
 category: backup
-status: community-reported
-last_reviewed: 2026-08-24
+status: maintained
+last_reviewed: 2026-08-25
 ---
 # Backup-Kompatibilitätsmatrix
 
-Diese Matrix trennt offizielle HostBrr-Funktionen von Community-Erfahrungen. `community-reported` bedeutet ausdrücklich nicht, dass wir die Kombination bereits selbst getestet haben.
+Diese Seite beantwortet zwei unterschiedliche Fragen:
 
-| Werkzeug / Verfahren | Transport / Backend | Evidenz | Einschätzung | Hinweise |
-|---|---|---|---|---|
-| rsync | SSH | offiziell + Community | sehr gut geeignet | HostBrr bewirbt rsync; Community nutzt automatisierte Backupjobs |
-| rclone | SFTP | Community mehrfach | sehr gut geeignet | häufigste Community-Lösung; auch mit `crypt` und Mounts |
-| rclone crypt | SFTP | Community mehrfach | sehr gut geeignet | clientseitige Verschlüsselung; Dateigröße und ungefähre Pfadlängen können Metadaten leaken |
-| Borg | SSH / serverseitiges Borg | Community + ältere Provider-Aussage | vielversprechend | 2024 wurde Borg 1.2.4 als installiert bestätigt; aktuelle Version/Verfügbarkeit muss geprüft werden |
-| Restic | SFTP | Community | funktioniert, Performance uneinheitlich | ein Nutzer berichtete 2025 deutlich bessere Performance mit Borg als mit Restic |
-| SSHFS | SSH/SFTP | Community | geeignet für Mounts | eher Mount als Backupformat; Latenz und viele Metadatenoperationen beachten |
-| rclone mount | SFTP + VFS Cache | Community mehrfach | geeignet | VFS-Cache kann Performance deutlich verbessern |
-| JuiceFS | SFTP Backend | Community | fortgeschritten | Community-Bericht nennt bessere Metadatenperformance als rclone mount bei vielen kleinen Dateien |
-| Proxmox Backup Server | gemountetes SFTP/SSHFS/rclone Backend | Community diskutiert | nicht empfohlen ohne Tests | zusätzlicher Mount-Layer ist ein Fehlerpunkt; PBS erwartet robuste Storage-Semantik |
-| Proxmox vzdump-Dateien | rsync/rclone/SFTP | technisch naheliegend | gut geeignet | fertige vzdump-Dateien offsite übertragen statt PBS-Datastore auf FUSE-Mount zu erzwingen |
+1. **Passt das Verfahren technisch zur HostBrr StorageBox?**
+2. **Ist es für den jeweiligen Backup-Zweck auch sinnvoll?**
 
-## Priorität für eigene Tests
+Die eigentliche Auswahl nach Anwendungsfall steht unter [Welche Backup-Methode ist die richtige?](welche-backup-methode.md). Diese Matrix dokumentiert vor allem **Kompatibilität, Abhängigkeiten und Evidenz**.
 
-1. rclone über SFTP
-2. rclone crypt
-3. rsync über SSH
-4. Borg: installierte Version und Remote-Repository testen
-5. Restic über SFTP
-6. Restore-Test aller Backupverfahren
-7. Proxmox: vzdump-Dateien per rclone/rsync übertragen
-8. erst danach experimentell PBS über einen Mount-Layer untersuchen
+## Status-Legende
 
-## Quellen
+| Status | Bedeutung |
+|---|---|
+| `official` | Funktion wird von HostBrr für die StorageBox offiziell angeboten oder dokumentiert |
+| `community-reported` | Nutzung wurde von mehreren oder einzelnen Anwendern berichtet, aber noch nicht von uns reproduziert |
+| `historical` | Aussage gilt für eine frühere Box-/Softwaregeneration und muss aktuell erneut geprüft werden |
+| `technical-fit` | funktioniert konzeptionell mit vorhandenen Standardprotokollen, auch wenn kein HostBrr-Praxisbeleg vorliegt |
+| `not-recommended` | technisch eventuell möglich, für diesen Zweck aber unnötig riskant oder architektonisch ungeeignet |
 
-- https://hostbrr.com/storageboxes.html
-- https://lowendtalk.com/discussion/206272/hostbrr-storage-box-how-safe-is-it
-- https://lowendtalk.com/discussion/205325/hostbrr-storage-boxes-any-experiences-with-them-good-or-bad
-- https://lowendtalk.com/discussion/199617/hostbrr-bf-storage-deals-epyc-10-gbps-storage-vps-directadmin-storage-boxes-500gb-7-year/p10
-- https://lowendtalk.com/discussion/212070/hostbrr-bf2025-deals-amd-threadripper-vps-15-year-1-tb-storage-just-1-month-more-inside/p12
-- https://lowendtalk.com/discussion/192011/hostbrr-directadmin-cpanel-hosting-reseller-100-nvme-litespeed-eu-usa-sg-upto-50-off/p25
-- https://lowendtalk.com/discussion/218682/4tb-storage-vps-or-pbs
+## Backup-Werkzeuge
+
+| Werkzeug | HostBrr-Seite benötigt | Verschlüsselung ruhender Daten | Historie/Snapshots | HostBrr-Evidenz | Rolle in dieser KB |
+|---|---|---:|---:|---|---|
+| **Restic** | SFTP | Ja | Ja | community-reported / technical-fit | **Standardempfehlung für echte Server-Backups** |
+| **Kopia** | SFTP | Ja | Ja | community-reported | starke Alternative, besonders für Policies/GUI |
+| **Borg** | SSH + kompatibles `borg serve` | Ja | Ja | historical + community-reported | technisch stark, aktuelle Serverversion zuerst prüfen |
+| **rclone + crypt** | SFTP | Ja | Nein | community-reported mehrfach | **verschlüsselte Offsite-Kopie fertiger Dateien/Archive** |
+| **rsync** | SSH/rsync | Nein¹ | Nein² | official + community-reported | **transparente Kopien, Mirrors, eigene Generationenmodelle** |
+
+¹ SSH verschlüsselt den Transport, nicht automatisch die auf der StorageBox liegenden Dateien.  
+² Mit `--backup-dir`, `--link-dest` oder getrennten Zielverzeichnissen kann Versionierung gebaut werden; sie ist aber nicht Teil des einfachen rsync-Mirror-Modells.
+
+## Zugriff und Mounts
+
+| Verfahren | Einschätzung | Verwendung |
+|---|---|---|
+| **SSHFS** | geeignet | einfacher Linux-/Windows-Dateizugriff; kein Backupformat |
+| **rclone mount + VFS Cache** | geeignet | Cloud-Drive-artiger Zugriff; Latenz und Cache beachten |
+| **JuiceFS über SFTP** | community-reported / fortgeschritten | interessant bei vielen Metadatenoperationen; später reproduzieren |
+
+Ein Mount ersetzt kein Backup. Ein kompromittierter Client kann bei Schreibrechten auch die entfernten Daten verändern oder löschen.
+
+## Proxmox
+
+| Ansatz | Einschätzung | Empfehlung |
+|---|---|---|
+| `vzdump` lokal → rclone crypt → StorageBox | sehr gut passend | **bevorzugter einfacher Offsite-Weg** |
+| `vzdump` lokal → Restic/Kopia | gut passend | sinnvoll, wenn Snapshot-Historie auf Repository-Ebene gewünscht ist |
+| `vzdump` lokal → rsync | gut passend | einfach und transparent, zusätzliche Generationenstrategie nötig |
+| PBS-Datastore direkt auf SSHFS/rclone-FUSE | **not-recommended** | zusätzliche Dateisystem-/WAN-Schicht; nicht als Standardarchitektur verwenden |
+
+Siehe [Proxmox-Rezept](../09-rezepte/proxmox-vzdump-rclone-crypt.md).
+
+## Entscheidung nach Zweck
+
+| Zweck | Erste Wahl | Gute Alternative |
+|---|---|---|
+| einzelner Linux-VPS | Restic | Kopia |
+| mehrere VPS | Restic/Kopia pro System oder zentraler Backuphost | Borg nach Verifikation |
+| Proxmox-vzdump offsite | rclone crypt | Restic/Kopia |
+| Windows-Dateien versioniert | Restic | Kopia |
+| NAS mit nativen Herstellerwerkzeugen | Hyper Backup/HBS über rsync, falls kompatibel | Restic/rclone in eigener Laufzeitumgebung |
+| großes Medien-/Archiv-Repository | rclone crypt | rsync bei unkritischen Klartextdaten |
+| direkt lesbarer Mirror | rsync | rclone ohne crypt |
+| maximale HostBrr-Unabhängigkeit | Restic/Kopia/rclone | rsync |
+| hohe Deduplizierung + Kompression | Borg nach Kompatibilitätsprüfung | Restic/Kopia |
+
+## HostBrr-spezifische Abhängigkeit
+
+Ein wesentlicher Unterschied liegt darin, **was auf dem StorageBox-Server vorhanden sein muss**:
+
+```text
+Restic ─┐
+Kopia  ─┼─ brauchen nur SFTP
+rclone ─┘
+
+rsync ───── braucht rsync/SSH auf dem Ziel
+
+Borg ────── profitiert bzw. benötigt für das normale Remote-Modell
+            eine kompatible Borg-Installation auf dem Ziel
+```
+
+Damit sind Restic, Kopia und rclone besonders portabel gegenüber Änderungen der serverseitig installierten Zusatzprogramme.
+
+## Was noch nicht als `verified` gilt
+
+Bis zur späteren Praxisphase bleiben insbesondere offen:
+
+- aktuelle SSH-/SFTP-Parameter beider Boxen
+- Kopia über SFTP auf aktueller Generation
+- aktuelle Borg-Version und Client-/Server-Kompatibilität
+- rsync `--link-dest` und Hardlinks/Quota-Verhalten
+- optimale Parallelität für rclone/Restic/Kopia
+- Integritätsprüfung und vollständiger Restore aller Verfahren
+- Unterschiede zwischen 2-TB- und 8-TB-Box
+
+## Priorität der späteren Tests
+
+1. Basiszugang: SSH/SFTP/rsync
+2. Restic: Backup → `check` → Restore
+3. rclone crypt: Copy → `cryptcheck` → Restore
+4. Kopia: Snapshot → Verify → Restore
+5. Borg: Versionen → Repository → Check → Restore
+6. rsync: Mirror + Generationenmodell + Restore
+7. gleiche Datensätze auf 2-TB- und 8-TB-Box vergleichen
+
+## Quellen und Vertiefung
+
+HostBrr- und Community-Fundstellen werden im Quellenregister gesammelt. Für die konkrete Einrichtung immer zusätzlich die jeweilige Primärdokumentation verwenden:
+
+- HostBrr StorageBox: https://hostbrr.com/storageboxes.html
+- Restic: https://restic.readthedocs.io/
+- Kopia: https://kopia.io/docs/
+- BorgBackup: https://borgbackup.readthedocs.io/
+- rclone: https://rclone.org/docs/
+- rsync: https://rsync.samba.org/
+
+Für die **Auswahl** des Werkzeugs: [Welche Backup-Methode?](welche-backup-methode.md)  
+Für die **praktische Umsetzung**: [Rezepte & Howtos](../09-rezepte/index.md)
