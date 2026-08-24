@@ -11,6 +11,7 @@ nav:
   - Grundlagen:
       - Übersicht: 01-grundlagen/index.md
       - Was ist die StorageBox?: 01-grundlagen/was-ist-die-storagebox.md
+      - Ressourcenlimits & Fair Use: 01-grundlagen/ressourcenlimits.md
   - Zugang:
       - Übersicht: 02-zugang/index.md
       - DirectAdmin:
@@ -40,7 +41,9 @@ nav:
       - Windows mit SSHFS: 04-mounts/windows-sshfs.md
   - Anwendungen:
       - Übersicht: 05-anwendungen/index.md
+      - Was läuft direkt?: 05-anwendungen/was-laeuft-direkt.md
       - Nextcloud: 05-anwendungen/nextcloud.md
+      - WebDAV: 05-anwendungen/webdav.md
   - Sicherheit:
       - Übersicht: 06-sicherheit/index.md
       - Bedrohungsmodell: 06-sicherheit/bedrohungsmodell.md
