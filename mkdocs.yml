@@ -8,6 +8,7 @@ theme:
 
 nav:
   - Start: index.md
+  - Schnellstart & wichtigste Docs: 00-schnellstart.md
   - Grundlagen:
       - Übersicht: 01-grundlagen/index.md
       - Was ist die StorageBox?: 01-grundlagen/was-ist-die-storagebox.md
@@ -86,6 +87,7 @@ nav:
           - Große Datenmengen übertragen: 09-rezepte/initiale-datenuebertragung.md
       - Wiederherstellung:
           - Disaster Recovery: 09-rezepte/disaster-recovery.md
+  - Bestandsaufnahme & Roadmap: 10-bestandsaufnahme.md
 
 markdown_extensions:
   - tables
