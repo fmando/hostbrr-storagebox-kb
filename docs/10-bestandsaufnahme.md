@@ -1,40 +1,156 @@
 # Bestandsaufnahme & Roadmap
 
-Stand: 24. August 2026
+Stand: 25. August 2026
+
+## Kurzfazit
+
+Die Knowledge Base ist inhaltlich deutlich näher an einer **v1.0** als noch zu Beginn des Audits. Die wichtigsten Themen existieren nicht mehr nur als Einzelartikel, sondern bilden konsistente Einstiegspfade:
+
+```text
+Startseite / Schnellstart
+        ↓
+Entscheidung nach Ziel
+        ↓
+konkretes Rezept
+        ↓
+Werkzeugdetails
+        ↓
+Sicherheit / Troubleshooting / Restore
+```
+
+Die große verbleibende Lücke ist inzwischen weniger die Dokumentationsstruktur als die **praktische Verifikation auf aktuellen HostBrr-StorageBoxen**.
 
 ## Reifegrad
 
-| Bereich | Reifegrad | Wichtigste offene Punkte |
+| Bereich | Reifegrad | Stand / wichtigste offene Punkte |
 |---|---|---|
-| Grundlagen | hoch | aktuelle Limits/Änderungen beobachten |
-| DirectAdmin/Zugang | hoch | HostBrr-Menüatlas, Screenshots, reale Funktionen |
-| Backup | hoch | Borg aktuell verifizieren, Restore-Zeiten |
-| Mounts | mittel | Langzeitstabilität und Cache-Tuning |
-| Anwendungen | mittel | Nextcloud-Praxis und App-Grenzen |
-| Sicherheit | hoch konzeptionell | Löschschutz und Credential-Trennung praktisch prüfen |
-| Performance | mittel | eigene reproduzierbare Messungen fehlen |
-| Troubleshooting | mittel-hoch | echte Fehlerfälle laufend ergänzen |
-| Rezepte | hoch/wachsend | Praxisprüfung und weitere Recovery-Fälle |
-| Quellen | mittel | Reddit, WebHostingTalk, NodeSeek weiter ausbauen |
-| Eigene Tests | zurückgestellt | 2-TB-/8-TB-Vergleich später |
+| Startseite & Navigation | **hoch** | klickbares Inhaltsverzeichnis und Schnellstart vorhanden |
+| Grundlagen | **hoch** | aktuelle Produktänderungen weiter beobachten |
+| DirectAdmin/Zugang | **hoch** | Menüatlas/Screenshots und reale Account-Funktionen später verifizieren |
+| Backup | **sehr hoch** | Restic, Kopia, Borg, rclone und rsync auditiert; Praxiswerte fehlen |
+| Backup-Entscheidung | **sehr hoch** | Entscheidung nach Use Case + Kompatibilitätsmatrix konsolidiert |
+| Mounts | **mittel-hoch** | Langzeitstabilität, Reconnect und Cache-Tuning praktisch prüfen |
+| Anwendungen | **mittel-hoch** | Nextcloud konzeptionell gut; reale PHP-/Cron-/DB-Grenzen fehlen |
+| Sicherheit | **hoch** | Bedrohungsmodell, Verschlüsselung, 3-2-1, Ransomware/Löschschutz vorhanden |
+| Performance | **mittel-hoch** | Community-Daten gut dokumentiert; eigene reproduzierbare Messungen fehlen |
+| Troubleshooting | **hoch** | gute Basis; wächst später mit realen Fehlerfällen |
+| Rezepte & Howtos | **sehr hoch** | zentrale Rezepte auditiert und strukturell vereinheitlicht |
+| Zuverlässigkeit | **hoch für Quellenlage** | Provider-/Community-Fälle dokumentiert; kein eigener Langzeittest |
+| Rechtliches | **hoch** | Terms, AUP, SLA/Haftung und DSGVO getrennt dokumentiert |
+| Quellenregister | **mittel-hoch** | LowEndTalk/Reddit/offizielle Quellen stark; weitere Foren optional |
+| Eigene Tests | **bewusst zurückgestellt** | 2-TB-/8-TB-Praxisphase folgt später |
 
-## Bereits besonders stark
+## Was inzwischen als v1.0-tauglich gelten kann
 
-**DirectAdmin:** Ersteinrichtung, Pfade, SSH-Keys, Cron, Domains/SSL, Datenbanken, PHP/LiteSpeed, Softaculous und API.
+### Navigation und Einstieg
 
-**Backup:** rsync, rclone crypt, Restic, Borg und Proxmox plus Entscheidungshilfe.
+Die Startseite besitzt ein klickbares Inhaltsverzeichnis. Der Schnellstart führt nach Aufgabenstellung statt nach Technologie. Backup-Entscheidung und Kompatibilitätsmatrix sind aufeinander abgestimmt.
 
-**Sicherheit:** Bedrohungsmodell, Verschlüsselung, SSH-Key-Härtung, 3-2-1 sowie Ransomware-/Löschschutz.
+### DirectAdmin
 
-**Rezepte:** konkrete Aufgaben statt nur Werkzeugdokumentation; dieser Bereich soll langfristig der wichtigste Nutzereinstieg werden.
+Dokumentiert sind:
 
-## Priorität A – vor Version 1.0
+- Ersteinrichtung
+- File Manager und Pfade
+- SSH-Key-Verwaltung
+- Cronjobs
+- Domains und SSL
+- Datenbanken
+- PHP/LiteSpeed
+- Softaculous
+- API/Automatisierung
 
-### Aktuelle HostBrr-Ressourcenlimits
-Zu klären: CPU, RAM, I/O, IOPS, Prozesse/Tasks, Cron-/PHP-Limits und sinnvolle Transferparallelität. Historische Community-Werte bleiben bis zur Verifikation als solche gekennzeichnet.
+Was später noch fehlt, ist vor allem ein **HostBrr-spezifischer Menüatlas mit echten Screenshots**.
+
+### Backup-Werkzeuge
+
+Die fünf zentralen Verfahren sind inzwischen nach einem gemeinsamen Qualitätsmaßstab dokumentiert:
+
+| Werkzeug | primäre Rolle in der KB |
+|---|---|
+| Restic | Standard für versionierte Server-Backups |
+| Kopia | Snapshot-Alternative mit Policies/GUI |
+| Borg | effizientes deduplizierendes Backup bei kompatiblem Remote-Borg |
+| rclone + crypt | verschlüsselte Offsite-Kopie fertiger Dateien/Archive |
+| rsync | transparente Spiegelung und eigene Generationenkonzepte |
+
+Für alle zentralen Werkzeuge werden inzwischen Verschlüsselung, Restore, Integritätsprüfung, Automatisierung und HostBrr-spezifische Grenzen berücksichtigt.
+
+### Rezepte
+
+Die wichtigsten realen Aufgaben sind vorhanden:
+
+- einzelner VPS
+- mehrere VPS
+- Proxmox vzdump
+- Windows-PC
+- Synology
+- QNAP
+- Nextcloud direkt
+- Nextcloud auf VPS + External Storage
+- Cloud-Laufwerk mit Cache
+- Multi-TB-Erstübertragung
+- Disaster Recovery
+
+Die wichtigsten Rezepte wurden auf die Struktur **Ziel → Architektur → Voraussetzungen → Einrichtung → Automatisierung → Verifikation → Restore → Sicherheit → Fehler → Primärquellen → offene HostBrr-Tests** angeglichen.
+
+## Vor der Praxisphase noch sinnvoll
+
+Diese Arbeiten können wir erledigen, ohne eine StorageBox anzufassen:
+
+### Redaktioneller Konsistenzlauf
+
+- Statusfelder (`maintained`, `community-reported`, `research`, `verified`) vereinheitlichen
+- alte Datumsangaben aktualisieren, wenn Seiten substanziell geändert wurden
+- doppelte Abschnitte und widersprüchliche Empfehlungen suchen
+- tote oder zu allgemeine Links durch direkte Primärquellen ersetzen
+- Querverweise zwischen Grundlagen, Rezepten und Troubleshooting vervollständigen
+
+### Quellenhygiene
+
+- Provider-Aussage, offizielle Produktseite und Community-Beobachtung klar unterscheiden
+- historische Produktgenerationen konsequent markieren
+- widersprüchliche Angaben sichtbar nebeneinanderstellen statt still aufzulösen
+- sekundäre GitHub-/Blog-Zusammenfassungen nicht als Primärquelle behandeln
+
+### Fehlende optionale Rezepte
+
+Für v1.0 nicht zwingend, aber sinnvoll:
+
+- Linux-Desktop sichern
+- macOS sichern
+- WordPress komplett sichern und wiederherstellen
+- MySQL/MariaDB/PostgreSQL als eigenständiges Datenbank-Rezept
+- Medienarchiv / große unveränderliche Datenbestände
+- Migration von Hetzner Storage Box → HostBrr
+- HostBrr → anderes Ziel
+
+## Bewusst auf später verschoben
+
+Folgende Punkte sind keine redaktionellen Blocker, sondern gehören in die Praxisphase:
+
+### 2 TB vs. 8 TB
+
+Verglichen werden sollen:
+
+- Node/Standort
+- DirectAdmin-Version
+- CPU/RAM/LVE-Limits
+- I/O und IOPS
+- Prozesse/Tasks
+- verfügbare Shell-Tools
+- SFTP/rsync/rclone
+- Restic/Kopia/Borg soweit sinnvoll
+- große Einzeldateien
+- viele kleine Dateien
+- Parallelität
+- Restore-Geschwindigkeit
+- Metadatenoperationen
+- Langzeitstabilität
 
 ### Reale Shell-Umgebung
-Später auf beiden Testboxen erfassen:
+
+Später erfassen:
 
 ```bash
 uname -a
@@ -49,29 +165,52 @@ ssh -V
 ```
 
 ### DirectAdmin-Menüatlas
-Echte Screenshots von Dashboard, File Manager, SSH Keys, Cron Jobs, Domains, SSL, Datenbanken, PHP, Softaculous und Resource Usage/Quota.
+
+Screenshots bzw. reale Menüstruktur von:
+
+- Dashboard
+- File Manager
+- SSH Keys
+- Cron Jobs
+- Domains
+- SSL
+- Datenbanken
+- PHP
+- Softaculous
+- Resource Usage / Quota
 
 ### Restore-Praxis
-Für jedes wichtige Backupverfahren mindestens einen vollständigen Restore dokumentieren.
 
-## Priorität B
+Die Dokumentation enthält bereits Restore-Wege. In der Praxisphase werden vollständige End-to-End-Restores durchgeführt und Zeitbedarf/RTO dokumentiert.
 
-**Nextcloud:** Softaculous, Cron, PHP-Extensions/Limits, OPcache, Datenbankperformance, große Uploads, WebDAV, SFTP External Storage und Upgrades praktisch prüfen.
+## Versionen sinnvoll trennen
 
-**NAS:** Synology/QNAP gegen eine reale Box prüfen, besonders rsync, SSH-Port, Verschlüsselung und Restore.
+Wir unterscheiden künftig zwei Meilensteine:
 
-**Mounts:** Langzeittests, Reconnect, Cache-Größen und viele kleine Dateien.
+### Dokumentationsstand 0.9
 
-## Priorität C
+Erreicht, wenn:
 
-Weitere Quellen: Reddit, WebHostingTalk, NodeSeek, ältere LowEndTalk-Angebotsthreads sowie HostBrr-KB/Status-/Produktseiten. Datum und Produktgeneration müssen erhalten bleiben.
+- alle Kernbereiche strukturell vollständig sind
+- zentrale Howtos Restore und Sicherheitsaspekte enthalten
+- Entscheidungshilfen konsistent sind
+- zentrale Aussagen Quellen besitzen
+- unbestätigte Aussagen sichtbar markiert sind
 
-Weitere Rezepte: Linux-Desktop, macOS, Datenbankserver, WordPress, Medienarchive, Hetzner→HostBrr-Migration, HostBrr→anderes Ziel, 2-TB→8-TB-Migration und Backup-Integritätsreports.
+**Dieser Stand ist weitgehend erreicht.**
 
-## Spätere Praxisphase: 2 TB vs. 8 TB
+### Version 1.0 – verifizierte KB
 
-Verglichen werden sollen Node/Standort, DirectAdmin-Version, Ressourcenlimits, Shell-Tools, große und kleine Dateien, SFTP, rsync, rclone, Restic/Borg soweit verfügbar, Parallelität, Metadatenoperationen und Langzeitstabilität.
+Erreicht, wenn zusätzlich:
 
-## Kriterien für Version 1.0
+- mindestens eine aktuelle HostBrr StorageBox vollständig inventarisiert wurde
+- zentrale Zugangs- und Backupverfahren praktisch getestet wurden
+- ein vollständiger Restore dokumentiert wurde
+- aktuelle Ressourcenlimits soweit möglich erfasst wurden
+- DirectAdmin-Menüstruktur einer aktuellen Box dokumentiert ist
 
-Version 1.0 ist erreicht, wenn die wichtigsten Einstiegspfade vollständig sind, zentrale Howtos einen Restore-Weg enthalten, aktuelle und historische Produktdaten getrennt sind, zentrale Aussagen Quellen besitzen, mindestens eine reale StorageBox inventarisiert wurde und offene Behauptungen sichtbar als unbestätigt markiert sind.
+Der spätere Vergleich der 2-TB- und 8-TB-Box geht über diese Mindestanforderung hinaus und kann die v1.0 deutlich aufwerten.
+
+## Nächster sinnvoller Schritt
+
+Vor der Praxisphase empfiehlt sich jetzt noch **ein abschließender redaktioneller Konsistenz- und Link-Audit über das gesamte Repository**. Danach ist die Dokumentationsseite im Wesentlichen „feature complete“, und wir können ohne strukturelle Altlasten in die praktische Verifikation wechseln.
