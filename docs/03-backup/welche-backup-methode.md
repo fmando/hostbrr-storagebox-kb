@@ -7,204 +7,401 @@ last_reviewed: 2026-08-24
 
 # Welche Backup-Methode ist die richtige?
 
-Für eine HostBrr StorageBox gibt es nicht *die eine* beste Backup-Methode. Die richtige Wahl hängt davon ab, ob einfache Dateikopien, verschlüsselte versionierte Backups, Deduplizierung oder maximale Portabilität wichtiger sind.
+Diese Seite ist die zentrale Entscheidungshilfe der HostBrr-StorageBox-KB.
 
-Diese Seite ist die Entscheidungshilfe zwischen **rsync**, **rclone + crypt**, **Restic** und **BorgBackup**.
+Es gibt nicht *das eine* beste Werkzeug. Entscheidend ist der Anwendungsfall: Soll eine transparente Dateikopie entstehen, ein verschlüsseltes Snapshot-Backup, eine Offsite-Kopie fertiger Archive oder ein dedupliziertes Langzeitrepository?
 
-> **HostBrr-spezifisch:** SSH/SFTP und rsync sind die natürliche Basis der StorageBox. Ob zusätzliche Programme wie Borg serverseitig verfügbar sind, muss auf der konkreten StorageBox geprüft werden.
+Für HostBrr betrachten wir fünf Hauptwerkzeuge:
 
-## Kurzentscheidung
+- **rsync** – transparente Dateikopie / Spiegelung
+- **rclone + crypt** – verschlüsselte Dateiübertragung und Offsite-Kopie
+- **Restic** – versioniertes, verschlüsseltes Backup über SFTP
+- **Kopia** – versioniertes, verschlüsseltes Backup mit Policies und optionaler GUI
+- **BorgBackup** – deduplizierendes, komprimiertes Backup über SSH, sofern serverseitig kompatibel
 
-| Anforderung | Empfehlung |
-|---|---|
-| Einfaches Spiegeln von Dateien | **rsync** |
-| Dateien verschlüsselt auf die StorageBox kopieren | **rclone + crypt** |
-| Verschlüsseltes, versioniertes Backup über SFTP | **Restic** |
-| Deduplizierung + Kompression + Verschlüsselung | **Borg**, wenn serverseitig kompatibel |
-| Möglichst wenig Abhängigkeit von HostBrr-Software | **Restic** oder **rclone** |
-| Dateien auf der StorageBox direkt lesbar halten | **rsync** / rclone ohne crypt |
-| Schutz der Inhalte vor dem Storage-Anbieter | **Restic**, **Borg** oder **rclone crypt** |
-| Proxmox-vzdump offsite kopieren | **rclone crypt** oder **Restic** |
+> **HostBrr-spezifisch:** SSH/SFTP und rsync sind die natürliche Basis der StorageBox. Restic, Kopia und rclone benötigen bei SFTP kein gleichnamiges Serverprogramm auf HostBrr. Borg profitiert dagegen wesentlich von einer kompatiblen Borg-Installation auf dem StorageBox-Server.
 
-## Funktionsvergleich
+## 30-Sekunden-Entscheidung
 
-| Eigenschaft | rsync | rclone + crypt | Restic | Borg |
-|---|---:|---:|---:|---:|
-| SFTP/SSH | Ja | Ja | Ja | Ja |
-| Clientseitige Verschlüsselung | Nein¹ | Ja | Ja | Ja |
-| Versionierte Snapshots | Nein² | Nein² | Ja | Ja |
-| Deduplizierung | eingeschränkt³ | Nein | Ja | Ja |
-| Kompression | Nein | Nein | repositoryabhängig / nicht Hauptmerkmal | Ja |
-| Einzeldateien direkt auf Ziel sichtbar | Ja | verschlüsselte Objekte | Nein | Nein |
-| Serverprogramm auf HostBrr nötig | rsync | Nein | Nein bei SFTP | für optimalen SSH-Betrieb Ja |
-| Einfacher Restore einzelner Dateien | Sehr einfach | Einfach | Einfach | Einfach |
-| Geeignet für automatisierte Backups | Ja | Ja | Ja | Ja |
+| Ich möchte … | Erste Wahl | Alternative |
+|---|---|---|
+| einen Linux-VPS versioniert und verschlüsselt sichern | **Restic** | Kopia |
+| viele VPS nach demselben Schema sichern | **Restic** | Kopia |
+| fertige Proxmox-`vzdump`-Archive offsite kopieren | **rclone + crypt** | Restic |
+| Windows-Dateien versioniert sichern | **Restic** | Kopia |
+| Synology/QNAP mit nativen Bordmitteln sichern | **Hyper Backup/HBS + rsync** | Restic/Kopia, falls auf NAS praktikabel |
+| große, weitgehend unveränderte Medienarchive verschlüsselt kopieren | **rclone + crypt** | rsync ohne Verschlüsselung |
+| Dateien auf HostBrr direkt lesbar halten | **rsync** | rclone ohne crypt |
+| maximale Deduplizierung + Kompression über SSH | **Borg** | Restic/Kopia |
+| GUI und zentral steuerbare Backup-Policies | **Kopia** | Restic + externe Verwaltung |
+| möglichst wenig HostBrr-spezifische Abhängigkeiten | **Restic / Kopia / rclone** | rsync |
+| nur einen Mirror erzeugen | **rsync** | rclone |
+| Schutz gegen versehentliche Löschungen / Ransomware | **Restic/Kopia/Borg + zusätzliche getrennte Kopie** | — |
 
-¹ Transport über SSH ist verschlüsselt, die Zieldateien selbst liegen aber unverschlüsselt vor.  
-² Versionierung kann mit zusätzlichen Verzeichnis-/Snapshot-Konzepten gebaut werden, gehört aber nicht zum einfachen Sync-Modell.  
-³ rsync überträgt effizient nur Änderungen, ist aber kein deduplizierendes Backup-Repository wie Restic oder Borg.
+## Entscheidungsbaum
 
-## 1. rsync – wenn Einfachheit zählt
+```text
+Was soll gespeichert werden?
+|
++-- Fertige Backup-Dateien / Archive?
+|   |
+|   +-- verschlüsselt? --> rclone + crypt
+|   +-- direkt lesbar? --> rsync / rclone ohne crypt
+|
++-- Laufende Dateibestände mit Historie?
+|   |
+|   +-- möglichst unkompliziert über SFTP? --> Restic
+|   +-- GUI/Policies wichtig? --> Kopia
+|   +-- maximale Borg-Deduplizierung/Kompression?
+|       --> Borg, wenn HostBrr-Version kompatibel
+|
++-- NAS mit Hersteller-Backupsoftware?
+|   |
+|   +-- Synology --> Hyper Backup + rsync
+|   +-- QNAP --> HBS 3 + rsync
+|
++-- Nur Spiegelung / direkt lesbare Kopie?
+    --> rsync
+```
 
-[rsync](https://rsync.samba.org/) ist ideal, wenn auf der StorageBox eine nachvollziehbare Dateikopie liegen soll.
+## Die wichtigste Unterscheidung: Kopie, Sync oder Backup?
 
-### Vorteile
+### Dateikopie
 
-- sehr etabliert
-- leicht zu automatisieren
-- effiziente inkrementelle Übertragung
-- Restore ohne Spezialsoftware möglich
-- Zielstruktur bleibt direkt lesbar
+Eine Datei wird von A nach B kopiert.
 
-### Nachteile
+Beispiele:
 
-- keine eingebaute clientseitige Verschlüsselung der gespeicherten Dateien
-- keine echte Snapshot-Historie im Grundbetrieb
-- `--delete` kann Fehler oder versehentlich gelöschte Dateien auf das Ziel übertragen
+```text
+rsync ohne --delete
+rclone copy
+```
 
-**Geeignet für:** Website-Dateien, zusätzliche Kopien, Mirror-Jobs und einfache VPS-Backups.
+Gut als zusätzliche Kopie. Noch keine automatische Historie.
 
-Siehe [rsync-Howto](rsync.md).
+### Synchronisation
 
-## 2. rclone + crypt – flexibel und transparent verschlüsselt
+Ziel soll dem Quellsystem entsprechen.
 
-[rclone](https://rclone.org/) unterstützt SFTP als Backend und kann mit dem [crypt-Backend](https://rclone.org/crypt/) eine zusätzliche verschlüsselte Sicht auf dieses Backend legen.
+Beispiele:
 
-Die allgemeine rclone-Dokumentation empfiehlt beim Kennenlernen den interaktiven Modus, um versehentlichen Datenverlust durch Sync-Operationen zu vermeiden.
+```text
+rsync --delete
+rclone sync
+```
 
-### Vorteile
+Gefährlich als einzige Sicherung: Löschungen, Verschlüsselungstrojaner oder beschädigte Dateien können auf das Ziel übernommen werden.
 
-- HostBrr benötigt nur SFTP
-- clientseitige Verschlüsselung
-- Dateinamen können ebenfalls verschlüsselt werden
-- sehr flexibel für Copy, Sync und Mount
-- gut für große fertige Backup-Dateien wie Proxmox `vzdump`
+### Snapshot-Backup
 
-### Nachteile
+Mehrere Zeitstände werden gespeichert.
 
-- kein klassisches Snapshot-Backupformat
-- `sync` spiegelt Löschungen und muss bewusst eingesetzt werden
-- Restore benötigt rclone und die crypt-Konfiguration/Passwörter
+Beispiele:
 
-**Geeignet für:** verschlüsselte Offsite-Kopien, Proxmox-vzdump-Dateien, Archive und bestehende Backup-Dateien.
+```text
+Restic
+Kopia
+Borg
+```
 
-Siehe [rclone + SFTP + crypt](rclone-sftp-crypt.md).
+Das ist für klassische Server- und PC-Backups normalerweise die bevorzugte Kategorie.
 
-## 3. Restic – starke Standardempfehlung für echte Backups
+## Funktionsmatrix
 
-[Restic](https://restic.net/) speichert mehrere Revisionen in einem verschlüsselten Repository und unterstützt [SFTP-Repositories](https://restic.readthedocs.io/en/stable/030_preparing_a_new_repo.html#sftp) direkt.
+| Eigenschaft | rsync | rclone + crypt | Restic | Kopia | Borg |
+|---|---:|---:|---:|---:|---:|
+| SFTP/SSH als HostBrr-Ziel | Ja | Ja | Ja | Ja | Ja |
+| Serverprogramm auf HostBrr nötig | rsync | Nein | Nein | Nein | typischerweise Ja |
+| clientseitige Verschlüsselung ruhender Daten | Nein¹ | Ja | Ja | Ja | Ja |
+| Snapshot-Historie eingebaut | Nein² | Nein² | Ja | Ja | Ja |
+| Deduplizierung | Nein³ | Nein | Ja | Ja | Ja |
+| Kompression | Nein | Nein | Ja | Ja | Ja |
+| Policies/Retention eingebaut | Nein² | Nein² | Ja | Ja | Ja |
+| GUI verfügbar | Nein | Drittanbieter | Drittanbieter | **Ja, KopiaUI** | Drittanbieter |
+| Dateien auf Ziel direkt lesbar | **Ja** | Nein bei crypt | Nein | Nein | Nein |
+| einfacher Bare-File-Restore ohne Tool | **Ja** | Nein bei crypt | Nein | Nein | Nein |
+| Repository-Integritätsprüfung | manuell | `cryptcheck`/`check` | `restic check` | `snapshot verify` | `borg check` |
+| HostBrr-Abhängigkeit | gering | gering | gering | gering | **höher** |
 
-Für HostBrr ist das besonders interessant: **Auf dem StorageBox-Server muss Restic für das SFTP-Backend nicht installiert sein.** Ein funktionierender SSH/SFTP-Zugang genügt.
+¹ SSH verschlüsselt den Transport, nicht die gespeicherten Zieldateien.  
+² Mit zusätzlichen Verzeichnis-/Generationenstrategien möglich, aber nicht Bestandteil eines einfachen Sync-Jobs.  
+³ rsync spart Übertragung unveränderter Daten, ist aber kein deduplizierendes Repository.
 
-### Vorteile
+## Gewichtete Bewertung speziell für HostBrr
 
-- clientseitige Verschlüsselung
-- Snapshots und Versionierung
+Bewertung: 1 = schwach, 5 = sehr gut. Die Werte sind **keine allgemeine Produktbewertung**, sondern eine Arbeitsbewertung für das HostBrr-StorageBox-Modell.
+
+| Kriterium | Gewicht | rsync | rclone crypt | Restic | Kopia | Borg |
+|---|---:|---:|---:|---:|---:|---:|
+| funktioniert mit einfachem SSH/SFTP-Modell | 20 % | 5 | 5 | 5 | 5 | 3 |
+| clientseitige Verschlüsselung | 15 % | 1 | 5 | 5 | 5 | 5 |
+| Versionierung/Retention | 20 % | 2 | 2 | 5 | 5 | 5 |
+| Restore-Handhabung | 15 % | 5 | 4 | 5 | 5 | 5 |
+| geringe Server-Abhängigkeit | 10 % | 5 | 5 | 5 | 5 | 2 |
+| Integritätsprüfung | 10 % | 3 | 4 | 5 | 5 | 5 |
+| Bedienbarkeit / Automatisierung | 10 % | 4 | 4 | 5 | 5 | 4 |
+| **gewichteter Eindruck** | **100 %** | **3,5** | **4,1** | **5,0** | **5,0** | **4,2** |
+
+Die beiden höchsten Werte bei Restic und Kopia bedeuten nicht, dass beide für jeden Fall gleich gut sind. Restic ist in unserer KB derzeit die konservativere Standardwahl; Kopia ist besonders interessant, wenn GUI und Policy-Steuerung gewünscht sind.
+
+## Empfehlung nach Anwendungsfall
+
+### 1. Einzelner Linux-VPS
+
+**Empfehlung: Restic über SFTP.**
+
+Warum:
+
+- keine Restic-Installation auf HostBrr nötig
+- verschlüsselt
+- Snapshots
 - Deduplizierung
-- direktes SFTP-Backend
-- `restic check` zur Repository-Prüfung
-- Retention über `forget`
+- `restic check`
+- klare Retention
+- einfacher Restore
 
-### Nachteile
+Siehe: [VPS mit Restic sichern](../09-rezepte/vps-restic.md).
 
-- Repository ist nicht als normale Dateikopie lesbar
-- Passwort/Keys sind kritisch für den Restore
-- `prune` kann bei großen Remote-Repositories aufwendig sein
+**Alternative:** Kopia, wenn GUI/Policies bevorzugt werden.
 
-Restic weist darauf hin, dass `forget` Snapshots entfernt und `prune` anschließend nicht mehr benötigte Daten freigibt. Pruning kann zeitaufwendig sein und sperrt das Repository während des Vorgangs.
+### 2. Viele VPS zentral sichern
 
-**Geeignet für:** Serverdaten, Home-Verzeichnisse, Konfigurationen und langfristige versionierte Offsite-Backups.
+**Empfehlung: Restic mit getrennten Repositories pro System oder sauberer zentraler Backup-Architektur.**
 
-Siehe [Restic-Howto](restic.md).
+Wichtig sind getrennte Credentials, eindeutige Repository-Namen und dokumentierte Retention.
 
-## 4. BorgBackup – sehr effizient, aber HostBrr-Abhängigkeit prüfen
+Siehe: [Mehrere VPS zentral sichern](../09-rezepte/mehrere-vps-zentral-sichern.md).
 
-[BorgBackup](https://www.borgbackup.org/) kombiniert content-defined Deduplizierung, Kompression und authentifizierte Verschlüsselung. Borg kann Remote-Repositories über SSH betreiben und profitiert deutlich davon, wenn Borg auch auf dem Remote-Host installiert ist.
+### 3. Proxmox VE
 
-### Vorteile
+Wenn Proxmox bereits fertige `vzdump`-Archive erzeugt:
 
-- sehr gute Deduplizierung
-- Kompression
-- clientseitige authentifizierte Verschlüsselung
-- Snapshots/Archive
-- `borg check`, `prune` und `compact`
-- Archive können für Restore-Zwecke gemountet werden
+**Empfehlung: rclone + crypt.**
 
-### Nachteile für HostBrr
+```text
+Proxmox
+  ↓ vzdump
+lokales Backup
+  ↓ rclone crypt
+HostBrr
+```
 
-- optimale Remote-Nutzung hängt von einer kompatiblen Borg-Installation auf HostBrr ab
-- Borg-Versionen zwischen Client und Server müssen berücksichtigt werden
-- ein über SSHFS gemountetes Remote-Dateisystem als Ersatz ist eine zusätzliche Fehler-/Performance-Schicht
+Vorteil: Proxmox bleibt unabhängig vom WAN; HostBrr dient als verschlüsselte Offsite-Kopie fertiger Archive.
 
-Borg selbst weist darauf hin, dass Remote-Betrieb besonders effizient ist, wenn Borg auf dem Zielhost installiert ist. Die Borg-Dokumentation warnt außerdem davor, beliebige Netzwerkdateisysteme ungeprüft als Backup-Unterbau zu verwenden.
+Siehe: [Proxmox vzdump + rclone crypt](../09-rezepte/proxmox-vzdump-rclone-crypt.md).
 
-**Geeignet für:** häufige Backups großer, sich teilweise ändernder Datenbestände, wenn die aktuelle HostBrr-Box Borg zuverlässig unterstützt.
+**Nicht bevorzugt:** einen PBS-Datastore über SFTP/FUSE erzwingen.
 
-Siehe [BorgBackup-Howto](borg.md).
+### 4. Windows-PC
 
-## Entscheidung nach Szenario
+**Empfehlung: Restic.**
 
-### VPS vollständig sichern
+Es bietet Snapshot-Historie und Restore einzelner Dateien, ohne dass HostBrr zusätzliche Software benötigt.
 
-**Bevorzugt: Restic.**
+Siehe: [Windows-PC sichern](../09-rezepte/windows-pc-sichern.md).
 
-Warum: versioniert, verschlüsselt, dedupliziert und nur SFTP auf HostBrr erforderlich.
+**Alternative:** Kopia – besonders interessant, wenn eine GUI gewünscht ist.
 
-### Proxmox-VM-/LXC-Backups
+### 5. Synology NAS
 
-Wenn Proxmox bereits `vzdump`-Archive erzeugt:
+**Empfehlung: Hyper Backup über rsync/Remote Shell**, sofern die konkrete StorageBox-Konfiguration kompatibel ist.
 
-**Bevorzugt: rclone crypt** für die Offsite-Kopie der fertigen Archive.
+Vorteil: native Synology-Integration, Zeitplan, Retention, Integritätsprüfung und Restore innerhalb der NAS-Oberfläche.
 
-Alternativ kann Restic die Backup-Dateien in ein versioniertes Repository aufnehmen. Bei großen VM-Images sollte der zusätzliche Repository-Overhead gegen den Nutzen der Deduplizierung getestet werden.
+Siehe: [Synology NAS sichern](../09-rezepte/synology.md).
 
-### Website sichern
+### 6. QNAP NAS
 
-Für eine unmittelbar lesbare Kopie:
+**Empfehlung: HBS 3 + rsync**, sofern die HostBrr-Verbindung im gewählten rsync-Modus funktioniert.
 
-**rsync** für Dateien + separater Datenbank-Dump.
+Siehe: [QNAP NAS sichern](../09-rezepte/qnap.md).
+
+### 7. Große Medienarchive
+
+Wenn die Dateien überwiegend unverändert bleiben:
+
+**Empfehlung: rclone + crypt.**
+
+Warum:
+
+- sehr einfaches Modell
+- verschlüsselte Dateikopie
+- gut parallelisierbar
+- kein Repositoryformat nötig
+
+Wenn Daten bewusst direkt lesbar bleiben sollen: **rsync**.
+
+### 8. Nextcloud-Daten
+
+Für Nextcloud gilt nicht einfach „ein Tool für alles“.
+
+Mindestens getrennt betrachten:
+
+- Konfiguration
+- Datenbank
+- Datenverzeichnis bzw. External Storage
+
+Für einen VPS mit Nextcloud ist **Restic** für Konfiguration + Dumps eine gute Wahl. Große bereits vorhandene Datenbestände auf der StorageBox können zusätzlich durch ein separates Backupverfahren abgesichert werden.
+
+Siehe:
+
+- [Nextcloud direkt auf HostBrr](../09-rezepte/nextcloud-direkt.md)
+- [Nextcloud auf VPS + StorageBox](../09-rezepte/nextcloud-vps-storagebox.md)
+
+### 9. Website + Datenbank
+
+Für eine direkt lesbare Kopie:
+
+```text
+Dateien -> rsync
+Datenbank -> Dump
+```
 
 Für echte Historie und Verschlüsselung:
 
-**Restic**.
+```text
+Dateien + Datenbankdump -> Restic
+```
 
-### Persönliche Dokumente
+### 10. Einfach nur eine zweite lesbare Kopie
 
-**Restic** als Standardempfehlung. Bei Bedarf an einer verschlüsselten, dateibasierten Ablage ist **rclone crypt** ebenfalls attraktiv.
+**Empfehlung: rsync.**
 
-### Große Medienarchive
+Das ist der Fall, in dem die Einfachheit von rsync ein echter Vorteil ist. Ein Restore ist schlichtes Zurückkopieren.
 
-Wenn Dateien überwiegend unverändert bleiben und bereits eine lokale Primärkopie existiert:
+Aber: `--delete` nicht unbedacht als „Backup“ bezeichnen.
 
-**rclone crypt** ist einfach und nachvollziehbar.
+## Restic oder Kopia?
 
-Bei vielen ähnlichen oder sich ändernden Dateien kann **Borg** durch Deduplizierung interessant werden, sofern HostBrr-Kompatibilität verifiziert ist.
+Beide sind für HostBrr konzeptionell sehr passend.
 
-## Was wir für HostBrr aktuell bevorzugen
+### Restic wählen, wenn …
 
-Für die KB verwenden wir vorläufig folgende Priorisierung:
+- CLI und einfache Automatisierung gewünscht sind
+- viele Linux-/Server-Howtos genutzt werden sollen
+- ein sehr geradliniges Repositorymodell bevorzugt wird
+- möglichst wenig zusätzliche Verwaltungslogik gewünscht ist
 
-1. **Restic** – beste Kombination aus echtem Backup, Verschlüsselung und geringer HostBrr-Abhängigkeit.
-2. **rclone + crypt** – ideal für verschlüsselte Kopien bereits erzeugter Backup-Dateien.
-3. **rsync** – ideal für einfache, direkt lesbare Spiegelungen.
-4. **Borg** – technisch sehr attraktiv, aber aktuelle serverseitige HostBrr-Kompatibilität zuerst prüfen.
+### Kopia wählen, wenn …
 
-Diese Reihenfolge ist **keine allgemeine Rangliste der Programme**, sondern eine Einschätzung speziell für das StorageBox-Modell.
+- GUI wichtig ist
+- Policies zentral verwaltet werden sollen
+- unterschiedliche Snapshot-Regeln komfortabel konfiguriert werden sollen
+- `snapshot verify` und die Kopia-Werkzeuge gut zum eigenen Workflow passen
 
-## Sicherheitsregel: Sync ist nicht automatisch Backup
+Für diese KB bleibt **Restic vorerst Standardempfehlung**, bis Kopia auf den aktuellen StorageBoxen praktisch verglichen wurde.
 
-Ein synchronisierter Mirror kann versehentliche Löschungen, beschädigte Dateien oder Ransomware-Veränderungen ebenfalls übernehmen. Für wichtige Daten sollte mindestens eine **versionierte und vom Quellsystem getrennte Wiederherstellungsmöglichkeit** existieren.
+## Wann Borg die beste Wahl sein kann
 
-Unabhängig vom Werkzeug gilt: Ein Backup ist erst dann belastbar, wenn ein Restore praktisch funktioniert hat.
+Borg ist technisch sehr stark, besonders bei häufigen Änderungen, Kompression und Deduplizierung.
+
+Borg wird für HostBrr besonders attraktiv, wenn folgende Punkte bestätigt sind:
+
+```bash
+borg --version
+```
+
+- Borg ist auf der StorageBox vorhanden
+- Client-/Serverversionen sind kompatibel
+- `borg serve` ist nutzbar
+- Quota/IO-Limits passen zum Repository
+- Restore wurde getestet
+
+Bis dahin bevorzugen wir Restic/Kopia, weil diese nur SFTP benötigen.
+
+## Ransomware-Sicherheit: kein Tool löst alles
+
+Auch ein perfektes Snapshot-Tool schützt nicht vollständig, wenn ein kompromittierter Server dieselben Credentials besitzt und das Remote-Repository löschen kann.
+
+Für wichtige Daten sollte die Architektur zusätzliche Schutzebenen enthalten:
+
+```text
+Primärdaten
+  + lokale Backupgeneration
+  + HostBrr Offsite
+  + mindestens eine weitere getrennte/offline/immutable Kopie
+```
+
+Siehe:
+
+- [3-2-1-Strategie](../06-sicherheit/3-2-1-strategie.md)
+- [Ransomware & Löschschutz](../06-sicherheit/ransomware-loeschschutz.md)
+- [Disaster Recovery](../09-rezepte/disaster-recovery.md)
+
+## Restore entscheidet, nicht der Backup-Button
+
+Für jedes Verfahren muss beantwortet sein:
+
+1. Wo liegen Passwort/Keys?
+2. Wie verbinde ich mich mit HostBrr?
+3. Wie finde ich den richtigen Snapshot?
+4. Wie stelle ich eine einzelne Datei wieder her?
+5. Wie stelle ich das komplette System wieder her?
+6. Wie lange dauert der Rücktransfer?
+7. Was passiert, wenn der ursprüngliche Server vollständig verloren ist?
+
+Ein Backup ohne getesteten Restore ist nur eine Annahme.
+
+## Unsere aktuelle HostBrr-Priorisierung
+
+### Für echte Backups
+
+1. **Restic** – derzeitige Standardempfehlung
+2. **Kopia** – sehr interessante gleichwertige Alternative, noch praktisch zu vergleichen
+3. **Borg** – technisch stark, aber aktuelle HostBrr-Serverkompatibilität zuerst prüfen
+
+### Für Offsite-Kopien
+
+1. **rclone + crypt** – verschlüsselte Kopien fertiger Dateien/Archive
+2. **rsync** – transparente direkt lesbare Kopien
+
+Diese Rangfolge gilt **nur für die HostBrr StorageBox** und nicht als allgemeine Bewertung der Programme.
+
+## Was wir später praktisch vergleichen
+
+Auf den aktuellen StorageBoxen sollen unter identischen Bedingungen verglichen werden:
+
+- Repository-Erstellung
+- 10–50 GB realistische Testdaten
+- große Einzeldateien
+- viele kleine Dateien
+- zweiter inkrementeller Lauf
+- Storageverbrauch
+- CPU-/I/O-Verhalten soweit sichtbar
+- Integritätsprüfung
+- Einzeldatei-Restore
+- kompletter Restore
+- Verhalten nach Verbindungsabbruch
+- Retention/Prune/Compact
+- Unterschiede zwischen den StorageBox-Größen
+
+Bis dahin bleiben Community- und Dokumentationsaussagen klar von eigener Verifikation getrennt.
 
 ## Weiterführende Dokumentation
 
-- [rsync – offizielle Projektseite](https://rsync.samba.org/)
-- [rclone – Dokumentation](https://rclone.org/docs/)
-- [rclone SFTP](https://rclone.org/sftp/)
-- [rclone crypt](https://rclone.org/crypt/)
-- [Restic – Dokumentation](https://restic.readthedocs.io/)
-- [Restic SFTP Repository](https://restic.readthedocs.io/en/stable/030_preparing_a_new_repo.html#sftp)
-- [Restic Forget/Prune](https://restic.readthedocs.io/en/stable/060_forget.html)
-- [BorgBackup – Projektseite](https://www.borgbackup.org/)
-- [BorgBackup – stabile Dokumentation](https://borgbackup.readthedocs.io/en/stable/)
+### rsync
+- [rsync Projekt](https://rsync.samba.org/)
+- [rsync Manual](https://download.samba.org/pub/rsync/rsync.1)
+
+### rclone
+- [rclone Dokumentation](https://rclone.org/docs/)
+- [SFTP Backend](https://rclone.org/sftp/)
+- [crypt](https://rclone.org/crypt/)
+- [cryptcheck](https://rclone.org/commands/rclone_cryptcheck/)
+
+### Restic
+- [Restic](https://restic.net/)
+- [Dokumentation](https://restic.readthedocs.io/)
+- [SFTP Repository](https://restic.readthedocs.io/en/stable/030_preparing_a_new_repo.html#sftp)
+- [Forget/Prune](https://restic.readthedocs.io/en/stable/060_forget.html)
+
+### Kopia
+- [Kopia](https://kopia.io/)
+- [Repositories](https://kopia.io/docs/repositories/)
+- [SFTP Repository](https://kopia.io/docs/reference/command-line/common/repository-create-sftp/)
+- [Snapshot Verify](https://kopia.io/docs/reference/command-line/common/snapshot-verify/)
+
+### BorgBackup
+- [BorgBackup](https://www.borgbackup.org/)
+- [Dokumentation](https://borgbackup.readthedocs.io/)
+- [Remote Repositories](https://borgbackup.readthedocs.io/en/stable/usage/general.html#repository-urls)
