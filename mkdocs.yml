@@ -48,7 +48,12 @@ nav:
       - SSH-Key-Härtung: 06-sicherheit/ssh-key-haertung.md
       - 3-2-1-Strategie: 06-sicherheit/3-2-1-strategie.md
       - Ransomware & Löschschutz: 06-sicherheit/ransomware-loeschschutz.md
-  - Performance: 07-performance/index.md
+  - Performance:
+      - Übersicht: 07-performance/index.md
+      - 10 Gbit/s in der Praxis: 07-performance/10gbit-realitaet.md
+      - Große vs. kleine Dateien: 07-performance/grosse-kleine-dateien.md
+      - Latenz & Routing: 07-performance/latenz-routing.md
+      - Community-Messwerte: 07-performance/messwerte-community.md
   - Troubleshooting:
       - Übersicht: 08-troubleshooting/index.md
       - SSH & SFTP: 08-troubleshooting/ssh-sftp.md
