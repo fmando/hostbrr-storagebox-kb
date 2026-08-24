@@ -89,6 +89,7 @@ nav:
       - Wiederherstellung:
           - Disaster Recovery: 09-rezepte/disaster-recovery.md
   - Bestandsaufnahme & Roadmap: 10-bestandsaufnahme.md
+  - Zuverlässigkeit, Wartung & Migrationen: 11-zuverlaessigkeit.md
 
 markdown_extensions:
   - tables
