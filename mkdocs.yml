@@ -12,7 +12,11 @@ nav:
       - Übersicht: 01-grundlagen/index.md
       - Was ist die StorageBox?: 01-grundlagen/was-ist-die-storagebox.md
   - Zugang: 02-zugang/index.md
-  - Backup: 03-backup/index.md
+  - Backup:
+      - Übersicht: 03-backup/index.md
+      - Kompatibilitätsmatrix: 03-backup/kompatibilitaetsmatrix.md
+      - rclone + SFTP + crypt: 03-backup/rclone-sftp-crypt.md
+      - Proxmox: 03-backup/proxmox.md
   - Mounts: 04-mounts/index.md
   - Anwendungen: 05-anwendungen/index.md
   - Sicherheit: 06-sicherheit/index.md
