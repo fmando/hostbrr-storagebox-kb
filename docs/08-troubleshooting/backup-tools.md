@@ -1,10 +1,10 @@
 ---
-title: rclone, Restic, Borg & rsync Troubleshooting
+title: rclone, Restic, Kopia, Borg & rsync Troubleshooting
 category: troubleshooting
 status: maintained
-last_reviewed: 2026-08-24
+last_reviewed: 2026-08-25
 ---
-# rclone, Restic, Borg & rsync Troubleshooting
+# rclone, Restic, Kopia, Borg & rsync Troubleshooting
 
 ## Grundregel
 
@@ -34,9 +34,13 @@ rclone lsd hostbrr-crypt:
 
 So lässt sich unterscheiden, ob SFTP oder die Crypt-Konfiguration betroffen ist.
 
+Bei Integritätsprüfungen beachten: SFTP stellt nicht automatisch dieselben serverseitigen Hashes wie Object Storage bereit. Bei `crypt` ist `rclone cryptcheck` der passende Spezialfall; je nach Prüfung kann zusätzlicher Download-Traffic entstehen.
+
 Offizielle Dokumentation:
 - [rclone SFTP](https://rclone.org/sftp/)
 - [rclone crypt](https://rclone.org/crypt/)
+- [rclone check](https://rclone.org/commands/rclone_check/)
+- [rclone cryptcheck](https://rclone.org/commands/rclone_cryptcheck/)
 - [rclone logging](https://rclone.org/docs/#logging)
 
 ## Restic
@@ -60,6 +64,27 @@ Wenn ein abgebrochener Prozess einen Lock hinterlassen hat, zuerst sicherstellen
 Offizielle Dokumentation:
 - [Restic – Checking integrity](https://restic.readthedocs.io/en/stable/045_working_with_repos.html#checking-integrity-and-consistency)
 - [Restic Documentation](https://restic.readthedocs.io/)
+
+## Kopia
+
+Repository-Verbindung und Snapshots prüfen:
+
+```bash
+kopia repository status
+kopia snapshot list
+```
+
+Snapshot-Inhalte verifizieren:
+
+```bash
+kopia snapshot verify
+```
+
+Für eine tiefere Prüfung kann Kopia auch einen Anteil der Dateien tatsächlich aus dem Repository lesen, entschlüsseln und dekomprimieren. Das erhöht bei einem Remote-SFTP-Ziel entsprechend I/O und Traffic.
+
+Offizielle Dokumentation:
+- [Kopia Documentation](https://kopia.io/docs/)
+- [snapshot verify](https://kopia.io/docs/reference/command-line/common/snapshot-verify/)
 
 ## Borg
 
