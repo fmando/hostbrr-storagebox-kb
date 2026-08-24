@@ -11,14 +11,19 @@ nav:
   - Grundlagen:
       - Übersicht: 01-grundlagen/index.md
       - Was ist die StorageBox?: 01-grundlagen/was-ist-die-storagebox.md
-  - Zugang: 02-zugang/index.md
+  - Zugang:
+      - Übersicht: 02-zugang/index.md
+      - SSH und SFTP: 02-zugang/ssh-sftp.md
   - Backup:
       - Übersicht: 03-backup/index.md
       - Kompatibilitätsmatrix: 03-backup/kompatibilitaetsmatrix.md
+      - rsync: 03-backup/rsync.md
       - rclone + SFTP + crypt: 03-backup/rclone-sftp-crypt.md
       - Proxmox: 03-backup/proxmox.md
   - Mounts: 04-mounts/index.md
-  - Anwendungen: 05-anwendungen/index.md
+  - Anwendungen:
+      - Übersicht: 05-anwendungen/index.md
+      - Nextcloud: 05-anwendungen/nextcloud.md
   - Sicherheit: 06-sicherheit/index.md
   - Performance: 07-performance/index.md
   - Troubleshooting: 08-troubleshooting/index.md
