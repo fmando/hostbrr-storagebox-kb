@@ -71,8 +71,12 @@ nav:
   - Rezepte & Howtos:
       - Übersicht: 09-rezepte/index.md
       - VPS mit Restic sichern: 09-rezepte/vps-restic.md
+      - Mehrere VPS zentral sichern: 09-rezepte/mehrere-vps-zentral-sichern.md
       - Proxmox vzdump + rclone crypt: 09-rezepte/proxmox-vzdump-rclone-crypt.md
+      - Windows-PC sichern: 09-rezepte/windows-pc-sichern.md
       - Cloud-Laufwerk mit Cache: 09-rezepte/cloud-drive-cache.md
+      - Große Datenmengen übertragen: 09-rezepte/initiale-datenuebertragung.md
+      - Disaster Recovery: 09-rezepte/disaster-recovery.md
 
 markdown_extensions:
   - tables
