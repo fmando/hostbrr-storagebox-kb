@@ -49,7 +49,13 @@ nav:
       - 3-2-1-Strategie: 06-sicherheit/3-2-1-strategie.md
       - Ransomware & Löschschutz: 06-sicherheit/ransomware-loeschschutz.md
   - Performance: 07-performance/index.md
-  - Troubleshooting: 08-troubleshooting/index.md
+  - Troubleshooting:
+      - Übersicht: 08-troubleshooting/index.md
+      - SSH & SFTP: 08-troubleshooting/ssh-sftp.md
+      - DirectAdmin, Quota & Cron: 08-troubleshooting/directadmin-quota-cron.md
+      - Backup-Tools: 08-troubleshooting/backup-tools.md
+      - Transfers & Mounts: 08-troubleshooting/performance-mounts.md
+      - Nextcloud: 08-troubleshooting/nextcloud.md
 
 markdown_extensions:
   - tables
