@@ -90,6 +90,12 @@ nav:
           - Disaster Recovery: 09-rezepte/disaster-recovery.md
   - Bestandsaufnahme & Roadmap: 10-bestandsaufnahme.md
   - Zuverlässigkeit, Wartung & Migrationen: 11-zuverlaessigkeit.md
+  - Rechtliches & Vertrag:
+      - Übersicht: 12-rechtliches/index.md
+      - Terms für StorageBox-Nutzer: 12-rechtliches/terms-storagebox.md
+      - Acceptable Use & Fair Use: 12-rechtliches/acceptable-use.md
+      - SLA, Verfügbarkeit & Haftung: 12-rechtliches/sla-haftung.md
+      - Datenschutz & DSGVO: 12-rechtliches/datenschutz-dsgvo.md
 
 markdown_extensions:
   - tables
