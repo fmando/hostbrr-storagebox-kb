@@ -2,7 +2,7 @@
 title: Linux – StorageBox mounten
 category: mounts
 status: community-reported
-last_reviewed: 2026-08-24
+last_reviewed: 2026-08-25
 ---
 # HostBrr StorageBox unter Linux mounten
 
@@ -56,6 +56,7 @@ SFTP-basierte Mounts sind besonders empfindlich gegenüber Latenz und vielen Met
 ## Weiterführende Dokumentation
 
 - [SSHFS](https://github.com/libfuse/sshfs)
-- [FUSE](https://www.kernel.org/doc/html/latest/filesystems/fuse.html)
+- [Linux Kernel – FUSE Overview](https://www.kernel.org/doc/html/latest/filesystems/fuse/fuse.html)
+- [Linux Kernel – FUSE Documentation Index](https://www.kernel.org/doc/html/latest/filesystems/fuse/index.html)
 - [rclone SFTP](https://rclone.org/sftp/)
 - [rclone mount](https://rclone.org/commands/rclone_mount/)
