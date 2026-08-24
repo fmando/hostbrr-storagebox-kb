@@ -24,27 +24,28 @@ Die große verbleibende Lücke ist inzwischen weniger die Dokumentationsstruktur
 
 | Bereich | Reifegrad | Stand / wichtigste offene Punkte |
 |---|---|---|
-| Startseite & Navigation | **hoch** | klickbares Inhaltsverzeichnis und Schnellstart vorhanden |
-| Grundlagen | **hoch** | aktuelle Produktänderungen weiter beobachten |
-| DirectAdmin/Zugang | **hoch** | Menüatlas/Screenshots und reale Account-Funktionen später verifizieren |
-| Backup | **sehr hoch** | Restic, Kopia, Borg, rclone und rsync auditiert; Praxiswerte fehlen |
+| Startseite & Navigation | **sehr hoch** | klickbares Inhaltsverzeichnis, Schnellstart und README-Einstieg vorhanden |
+| Grundlagen | **hoch** | Index bereinigt; aktuelle Produktänderungen weiter beobachten |
+| DirectAdmin/Zugang | **hoch** | Index bereinigt; Menüatlas/Screenshots und reale Account-Funktionen später verifizieren |
+| Backup | **sehr hoch** | Restic, Kopia, Borg, rclone und rsync auditiert; Übersicht und Entscheidungshilfe konsistent |
 | Backup-Entscheidung | **sehr hoch** | Entscheidung nach Use Case + Kompatibilitätsmatrix konsolidiert |
-| Mounts | **mittel-hoch** | Langzeitstabilität, Reconnect und Cache-Tuning praktisch prüfen |
+| Mounts | **mittel-hoch** | Übersicht bereinigt; Langzeitstabilität, Reconnect und Cache-Tuning praktisch prüfen |
 | Anwendungen | **mittel-hoch** | Nextcloud konzeptionell gut; reale PHP-/Cron-/DB-Grenzen fehlen |
 | Sicherheit | **hoch** | Bedrohungsmodell, Verschlüsselung, 3-2-1, Ransomware/Löschschutz vorhanden |
 | Performance | **mittel-hoch** | Community-Daten gut dokumentiert; eigene reproduzierbare Messungen fehlen |
-| Troubleshooting | **hoch** | gute Basis; wächst später mit realen Fehlerfällen |
+| Troubleshooting | **hoch** | Kopia ergänzt; wächst später mit realen Fehlerfällen |
 | Rezepte & Howtos | **sehr hoch** | zentrale Rezepte auditiert und strukturell vereinheitlicht |
 | Zuverlässigkeit | **hoch für Quellenlage** | Provider-/Community-Fälle dokumentiert; kein eigener Langzeittest |
 | Rechtliches | **hoch** | Terms, AUP, SLA/Haftung und DSGVO getrennt dokumentiert |
 | Quellenregister | **mittel-hoch** | LowEndTalk/Reddit/offizielle Quellen stark; weitere Foren optional |
+| Link-Hygiene | **automatisiert** | GitHub Actions prüft Markdown-Links bei Push/PR |
 | Eigene Tests | **bewusst zurückgestellt** | 2-TB-/8-TB-Praxisphase folgt später |
 
 ## Was inzwischen als v1.0-tauglich gelten kann
 
 ### Navigation und Einstieg
 
-Die Startseite besitzt ein klickbares Inhaltsverzeichnis. Der Schnellstart führt nach Aufgabenstellung statt nach Technologie. Backup-Entscheidung und Kompatibilitätsmatrix sind aufeinander abgestimmt.
+Die Startseite besitzt ein klickbares Inhaltsverzeichnis. Der Schnellstart führt nach Aufgabenstellung statt nach Technologie. Backup-Entscheidung und Kompatibilitätsmatrix sind aufeinander abgestimmt. Das Repository-README verweist direkt auf Startseite und Schnellstart.
 
 ### DirectAdmin
 
@@ -94,26 +95,32 @@ Die wichtigsten realen Aufgaben sind vorhanden:
 
 Die wichtigsten Rezepte wurden auf die Struktur **Ziel → Architektur → Voraussetzungen → Einrichtung → Automatisierung → Verifikation → Restore → Sicherheit → Fehler → Primärquellen → offene HostBrr-Tests** angeglichen.
 
-## Vor der Praxisphase noch sinnvoll
+## Ergebnis des repositoryweiten Konsistenz-Audits
 
-Diese Arbeiten können wir erledigen, ohne eine StorageBox anzufassen:
+### Bereits korrigiert
 
-### Redaktioneller Konsistenzlauf
+- README verweist direkt auf `docs/index.md` und Schnellstart.
+- Startseite besitzt ein klickbares Inhaltsverzeichnis.
+- `mkdocs.yml` verweist nur auf vorhandene Dokumente.
+- alte Abschnittsüberschriften wie **„Geplante Howtos“** in Grundlagen, Zugang, Backup und Mounts wurden durch den tatsächlichen aktuellen Dokumentbestand ersetzt.
+- Kopia wurde in Troubleshooting und Backup-Navigation konsistent ergänzt.
+- Proxmox-Hinweise zur rclone-Integritätsprüfung wurden an die SFTP-/crypt-Besonderheiten angepasst.
+- das bisher uneinheitlich verwendete Frontmatter-Feld `status` ist auf der Startseite dokumentiert.
+- interne zentrale Querverweise zwischen Einstieg, Werkzeugen, Rezepten und Troubleshooting wurden nachgezogen.
 
-- Statusfelder (`maintained`, `community-reported`, `research`, `verified`) vereinheitlichen
-- alte Datumsangaben aktualisieren, wenn Seiten substanziell geändert wurden
-- doppelte Abschnitte und widersprüchliche Empfehlungen suchen
-- tote oder zu allgemeine Links durch direkte Primärquellen ersetzen
-- Querverweise zwischen Grundlagen, Rezepten und Troubleshooting vervollständigen
+### Link-Audit
 
-### Quellenhygiene
+Unter `.github/workflows/link-check.yml` läuft jetzt ein automatischer Markdown-Link-Check mit Lychee. Er prüft bei Änderungen alle Markdown-Dateien und macht tote interne oder externe Links künftig als CI-Fehler sichtbar.
 
-- Provider-Aussage, offizielle Produktseite und Community-Beobachtung klar unterscheiden
-- historische Produktgenerationen konsequent markieren
-- widersprüchliche Angaben sichtbar nebeneinanderstellen statt still aufzulösen
-- sekundäre GitHub-/Blog-Zusammenfassungen nicht als Primärquelle behandeln
+Damit ist die Link-Hygiene nicht nur eine einmalige Aufräumaktion, sondern Teil des Repository-Betriebs.
 
-### Fehlende optionale Rezepte
+### Noch redaktionell offen, aber kein Strukturblocker
+
+- einzelne ältere Artikel können weiterhin ein älteres `last_reviewed` tragen, solange sie seitdem nicht substanziell verändert wurden.
+- das kombinierte `status`-Feld könnte später in getrennte Frontmatter-Felder für **Dokumentreife** und **Evidenzstatus** aufgeteilt werden.
+- weitere externe Quellen können bei Gelegenheit durch präzisere Primärlinks ersetzt werden.
+
+## Optionale Ergänzungen vor der Praxisphase
 
 Für v1.0 nicht zwingend, aber sinnvoll:
 
@@ -196,8 +203,9 @@ Erreicht, wenn:
 - Entscheidungshilfen konsistent sind
 - zentrale Aussagen Quellen besitzen
 - unbestätigte Aussagen sichtbar markiert sind
+- Navigation und Links automatisiert überprüft werden
 
-**Dieser Stand ist weitgehend erreicht.**
+**Dieser Stand ist erreicht.**
 
 ### Version 1.0 – verifizierte KB
 
@@ -213,4 +221,4 @@ Der spätere Vergleich der 2-TB- und 8-TB-Box geht über diese Mindestanforderun
 
 ## Nächster sinnvoller Schritt
 
-Vor der Praxisphase empfiehlt sich jetzt noch **ein abschließender redaktioneller Konsistenz- und Link-Audit über das gesamte Repository**. Danach ist die Dokumentationsseite im Wesentlichen „feature complete“, und wir können ohne strukturelle Altlasten in die praktische Verifikation wechseln.
+Die Dokumentationsseite kann jetzt als **0.9 feature-complete** gelten. Der nächste große Qualitätssprung kommt nicht mehr durch weitere Strukturarbeit, sondern durch die spätere **Praxisverifikation auf realen StorageBoxen**. Optionale neue Rezepte können unabhängig davon ergänzt werden.
