@@ -41,7 +41,13 @@ nav:
   - Anwendungen:
       - Übersicht: 05-anwendungen/index.md
       - Nextcloud: 05-anwendungen/nextcloud.md
-  - Sicherheit: 06-sicherheit/index.md
+  - Sicherheit:
+      - Übersicht: 06-sicherheit/index.md
+      - Bedrohungsmodell: 06-sicherheit/bedrohungsmodell.md
+      - Verschlüsselung: 06-sicherheit/verschluesselung.md
+      - SSH-Key-Härtung: 06-sicherheit/ssh-key-haertung.md
+      - 3-2-1-Strategie: 06-sicherheit/3-2-1-strategie.md
+      - Ransomware & Löschschutz: 06-sicherheit/ransomware-loeschschutz.md
   - Performance: 07-performance/index.md
   - Troubleshooting: 08-troubleshooting/index.md
 
