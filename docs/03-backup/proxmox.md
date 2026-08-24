@@ -2,7 +2,7 @@
 title: Proxmox-Backups auf HostBrr StorageBox
 category: backup
 status: community-reported
-last_reviewed: 2026-08-24
+last_reviewed: 2026-08-25
 ---
 # Proxmox-Backups auf HostBrr StorageBox
 
@@ -34,6 +34,8 @@ Damit bleibt die StorageBox ein Offsite-Dateiziel. Proxmox muss keine speziellen
 - rclone crypt ermöglicht clientseitige Verschlüsselung
 - Restore kann zunächst lokal zurückkopiert und anschließend normal über Proxmox durchgeführt werden
 
+Das vollständige Schritt-für-Schritt-Rezept steht unter [Proxmox vzdump + rclone crypt](../09-rezepte/proxmox-vzdump-rclone-crypt.md).
+
 ## PBS-Datastore auf gemounteter StorageBox
 
 Technisch kann man versuchen, SFTP-Speicher per SSHFS/rclone/ähnlichem Mount einzubinden und darauf einen PBS-Datastore zu legen. Das ist für diese KB derzeit **nicht als Produktionslösung empfohlen**.
@@ -43,13 +45,19 @@ Community-Diskussionen weisen auf den zusätzlichen Mount-Layer als Fehlerpunkt 
 ## Geplanter Praxistest
 
 1. PVE erzeugt lokales vzdump-Backup.
-2. SHA-256 des lokalen Archivs erfassen.
+2. lokalen SHA-256-Wert beziehungsweise eine andere reproduzierbare Prüfsumme erfassen.
 3. Upload mit rclone über SFTP, optional über `crypt`.
-4. Remote-Datei mit `rclone check` bzw. geeignetem Integritätscheck prüfen.
+4. Integrität passend zum gewählten Remote prüfen.
 5. Backup auf ein separates Restore-Ziel zurückladen.
-6. Integrität erneut prüfen.
+6. lokale Integrität erneut prüfen.
 7. Test-Restore einer VM/LXC durchführen.
 8. Laufzeiten und Speicherverbrauch dokumentieren.
+
+### Hinweis zu rclone-Prüfungen
+
+Bei einem unverschlüsselten SFTP-Remote kann `rclone check` verwendet werden; SFTP bietet aber nicht automatisch dieselben serverseitigen Hashfunktionen wie Object Storage. Je nach Konfiguration kann deshalb ein Download-basierter Vergleich nötig sein.
+
+Bei einem `crypt`-Remote ist [rclone cryptcheck](https://rclone.org/commands/rclone_cryptcheck/) der dafür vorgesehene Spezialfall. Die Details werden in [rclone + SFTP + crypt](rclone-sftp-crypt.md) behandelt.
 
 ## Noch offen
 
