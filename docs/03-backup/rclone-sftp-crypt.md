@@ -6,72 +6,62 @@ last_reviewed: 2026-08-24
 ---
 # rclone über SFTP mit optionaler Verschlüsselung
 
-`rclone` über SFTP ist eine der am häufigsten berichteten Kombinationen für die HostBrr StorageBox. Mehrere Community-Berichte nennen sowohl normale Transfers als auch Mounts und `rclone crypt`.
+`rclone` über SFTP ist eine der am häufigsten berichteten Kombinationen für die HostBrr StorageBox. Es eignet sich besonders für Dateiübertragung, verschlüsselte Offsite-Kopien und als Baustein hinter bereits versionierten Backups.
 
-> **Status:** Community mehrfach bestätigt, in dieser KB noch nicht selbst verifiziert.
+> **Wichtig:** rclone ist primär ein Transfer-/Sync-Werkzeug. `rclone crypt` ergänzt Verschlüsselung, aber nicht automatisch Snapshot-Historie und Retention wie Restic, Borg oder Kopia.
 
 ## Architektur
 
 ```text
 Quellsystem
-   |
-   | rclone
-   v
+   ↓ rclone
 optional: crypt remote
-   |
-   | SFTP/SSH
-   v
+   ↓
+SFTP/SSH
+   ↓
 HostBrr StorageBox
 ```
 
-## Warum rclone crypt?
+## Voraussetzungen
 
-Die SFTP-Verbindung verschlüsselt den Transport. Ohne zusätzliche Verschlüsselung liegen die Dateien auf dem Ziel jedoch grundsätzlich im Klartext vor. Ein `crypt`-Remote verschlüsselt Inhalte und optional Dateinamen bereits auf dem Client.
+- aktuelle rclone-Version
+- HostBrr-Hostname
+- Benutzername
+- tatsächlicher SSH-Port
+- bevorzugt SSH-Key
+- eigener Zielordner
+- bei `crypt`: Passwort und Salt/zweites Passwort sicher außerhalb des Quellsystems verwahren
 
-Auch bei aktivierter Verschlüsselung können bestimmte Metadaten ableitbar bleiben, insbesondere Dateigrößen und ungefähr die Länge verschlüsselter Pfade/Dateinamen.
-
-## Basiskonfiguration
-
-Auf dem Client:
+## SFTP konfigurieren
 
 ```bash
 rclone config
 ```
 
-Ein neues Remote vom Typ `sftp` anlegen. Benötigt werden die individuellen Daten aus der HostBrr-Welcome-Mail bzw. DirectAdmin-Konfiguration:
-
-- Hostname/IP
-- Benutzername
-- SSH-Port
-- bevorzugt SSH-Key statt Passwort
-
-**Keinen SSH-Port aus Foren blind übernehmen.** In Community-Beispielen taucht Port `53211` auf; maßgeblich sind die Daten des eigenen Accounts.
-
-Anschließend testen:
+Remote vom Typ `sftp` anlegen und anschließend testen:
 
 ```bash
 rclone lsd hostbrr:
+rclone about hostbrr:
 ```
+
+`rclone about` funktioniert nur, wenn das Backend die Quota-/Usage-Abfrage unterstützt; deshalb ist dies auf HostBrr praktisch zu verifizieren.
+
+Keinen Port aus Foren blind übernehmen.
 
 ## Verschlüsseltes Remote
 
-Danach ein zweites Remote vom Typ `crypt` erstellen:
-
-```bash
-rclone config
-```
-
-Als darunterliegendes Ziel beispielsweise:
+Ein zweites Remote vom Typ `crypt` über dem SFTP-Ziel anlegen, beispielsweise auf:
 
 ```text
 hostbrr:/backups/encrypted
 ```
 
-Passwort und Salt/zweites Passwort sicher außerhalb des Repositories aufbewahren. Ohne diese Daten ist ein Restore nicht möglich.
+Die SFTP-Verbindung verschlüsselt nur den Transport. `crypt` verschlüsselt die Nutzdaten und – je nach Konfiguration – Datei- und Verzeichnisnamen clientseitig.
 
-## Backup-Beispiel
+## `copy` oder `sync`?
 
-Für Backup-Szenarien ist `copy` häufig sicherer als ein unbedachtes `sync`, weil `sync` Löschungen auf das Ziel spiegeln kann.
+Für eine Offsite-Kopie ist `copy` häufig die sicherere Ausgangsbasis:
 
 ```bash
 rclone copy /srv/data hostbrr-crypt:server01 \
@@ -80,28 +70,95 @@ rclone copy /srv/data hostbrr-crypt:server01 \
   --checkers 8
 ```
 
-Vor produktiver Nutzung zuerst mit Testdaten arbeiten.
+`sync` macht das Ziel passend zur Quelle und kann deshalb auch Löschungen übertragen. Vor jedem neuen `sync`-Konzept zuerst mit Testdaten und `--dry-run` arbeiten.
 
-## Mounts und VFS Cache
+## Integritätsprüfung
 
-Community-Berichte empfehlen bei `rclone mount` einen lokalen VFS-Cache. Das kann Schreibzugriffe und wiederholte Zugriffe deutlich beschleunigen. Die optimale Cachegröße hängt vom Client und Anwendungsfall ab.
+Für unverschlüsselte Ziele:
 
-Ein Community-Nutzer wechselte bei einem datenintensiven Anwendungsfall mit vielen Metadatenzugriffen von rclone mount zu JuiceFS über SFTP, weil Metadatenoperationen über rclone/SFTP langsam waren. Für reine Backup-Transfers ist dieses Problem wesentlich weniger relevant.
+```bash
+rclone check /srv/data hostbrr:server01
+```
 
-## Noch zu testen
+Bei einem `crypt`-Remote ist `rclone cryptcheck` das spezialisierte Werkzeug:
 
-- SSH-Key-Anmeldung auf aktueller 2026er StorageBox
-- tatsächlicher SSH-Port
-- `rclone lsd`, `copy`, `check`, `sync`
-- `crypt` mit verschlüsselten Datei- und Verzeichnisnamen
-- Upload/Download einer 10-GiB-Testdatei
-- 10.000 kleine Dateien
-- Restore auf leeres Ziel
-- sinnvolle Werte für `transfers` und `checkers`
+```bash
+rclone cryptcheck /srv/data hostbrr-crypt:server01
+```
 
-## Quellen
+Wichtig für SFTP: Remote-Hashes sind nicht immer verfügbar. rclone versucht je nach Serverkonfiguration Hash-Kommandos über SSH zu nutzen. Wenn keine brauchbaren Hashes verfügbar sind, kann `rclone check --download` Daten tatsächlich lesen und vergleichen – das verursacht entsprechend viel Traffic.
 
-- https://lowendtalk.com/discussion/206272/hostbrr-storage-box-how-safe-is-it
-- https://lowendtalk.com/discussion/205325/hostbrr-storage-boxes-any-experiences-with-them-good-or-bad
-- https://lowendtalk.com/discussion/202975/tutorial-turn-a-cheap-hdd-storage-vps-into-nvme-speed
-- https://lowendtalk.com/discussion/212070/hostbrr-bf2025-deals-amd-threadripper-vps-15-year-1-tb-storage-just-1-month-more-inside/p15
+## Versionierung und Retention
+
+`copy` + `crypt` allein erzeugt keine komfortable Snapshot-Historie. Für echte Backupgenerationen gibt es drei saubere Ansätze:
+
+1. bereits versionierte Archive übertragen, z. B. Proxmox `vzdump`;
+2. getrennte datierte Zielverzeichnisse plus eigene Retention;
+3. statt rclone ein Snapshot-Backupwerkzeug wie Restic/Kopia/Borg verwenden.
+
+Für einfache Spiegelungen ist rclone hervorragend; für komplexe Backuphistorien sollte die zusätzliche Logik bewusst geplant werden.
+
+## Restore
+
+Ein Restore muss mit leerem Ziel getestet werden:
+
+```bash
+mkdir -p /restore-test
+rclone copy hostbrr-crypt:server01 /restore-test --progress
+```
+
+Danach Dateizahl, Größen und bei wichtigen Daten Inhalte/Checksums prüfen.
+
+Für Disaster Recovery zusätzlich die rclone-Konfiguration beziehungsweise alle Crypt-Passwörter separat sichern. Ohne Crypt-Geheimnisse sind die Remote-Daten nicht sinnvoll wiederherstellbar.
+
+## Automatisierung
+
+Für Cron/systemd:
+
+- absolute Pfade verwenden,
+- Logs schreiben,
+- Exitcode prüfen,
+- Secrets nicht in die Kommandozeile schreiben,
+- keine parallelen Läufe desselben Jobs zulassen,
+- Quota/Transferverbrauch beobachten.
+
+## Performance
+
+`--transfers` und `--checkers` nicht blind maximieren. Shared-Hosting-Limits, SFTP-Verschlüsselung, kleine Dateien, Latenz und Quellstorage können begrenzen.
+
+Unsere spätere 2-TB-/8-TB-Testreihe soll identische Daten mit mehreren Parallelitätsstufen übertragen.
+
+## Typische Fehler
+
+### Anmeldung funktioniert in SSH, aber nicht in rclone
+
+Port, Benutzer, Key-Datei und SSH-Agent prüfen. Viele Keys im Agent können zu `Too many authentication failures` führen; rclone unterstützt eine gezieltere Agent-Nutzung.
+
+### `check` kann keine Hashes vergleichen
+
+SFTP-Backend und verfügbare Remote-Hash-Kommandos prüfen. Für einen vollständigen Vergleich notfalls `--download` verwenden.
+
+### Ziel wurde nach `sync` gelöscht
+
+Das ist erwartetes Sync-Verhalten. Für Backups `copy`, Versionierung oder ein Snapshot-Tool verwenden.
+
+### Crypt-Remote lässt sich nach Neuinstallation nicht öffnen
+
+rclone-Konfiguration bzw. Crypt-Passwort/Salt fehlen. Diese Daten gehören in die Disaster-Recovery-Dokumentation.
+
+## HostBrr-spezifische offene Tests
+
+- SSH-Key-Anmeldung auf beiden Boxen
+- `rclone about`/Quota-Unterstützung
+- verfügbare Hash-Kommandos auf dem SFTP-Server
+- `copy`, `check`, `cryptcheck`, Restore
+- 10-GiB-Datei und viele kleine Dateien
+- optimale `transfers`/`checkers`
+- Verhalten bei Verbindungsabbruch
+
+## Primärquellen
+
+- rclone SFTP: https://rclone.org/sftp/
+- rclone crypt: https://rclone.org/crypt/
+- rclone check: https://rclone.org/commands/rclone_check/
+- rclone cryptcheck: https://rclone.org/commands/rclone_cryptcheck/
