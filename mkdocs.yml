@@ -13,7 +13,12 @@ nav:
       - Was ist die StorageBox?: 01-grundlagen/was-ist-die-storagebox.md
   - Zugang:
       - Übersicht: 02-zugang/index.md
-      - DirectAdmin: 02-zugang/directadmin.md
+      - DirectAdmin:
+          - Übersicht: 02-zugang/directadmin.md
+          - Ersteinrichtung: 02-zugang/directadmin-ersteinrichtung.md
+          - SSH-Key einrichten: 02-zugang/directadmin-ssh-key.md
+          - Cronjobs: 02-zugang/directadmin-cronjobs.md
+          - Domains & SSL: 02-zugang/directadmin-domains-ssl.md
       - SSH & SFTP: 02-zugang/ssh-sftp.md
   - Backup:
       - Übersicht: 03-backup/index.md
