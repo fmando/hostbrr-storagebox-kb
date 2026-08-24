@@ -1,6 +1,6 @@
 # Schnellstart & wichtigste Dokumente
 
-Diese Seite ist der kurze Weg durch die Knowledge Base. Wenn du nicht weißt, wo du anfangen sollst, wähle dein Ziel statt ein bestimmtes Werkzeug.
+Diese Seite ist der kurze Weg durch die Knowledge Base. Wenn du nicht weißt, wo du anfangen sollst, wähle dein **Ziel** statt eines Werkzeugs.
 
 ## Ich habe gerade eine neue StorageBox bekommen
 
@@ -11,29 +11,53 @@ Diese Seite ist der kurze Weg durch die Knowledge Base. Wenn du nicht weißt, wo
 5. [SSH & SFTP testen](02-zugang/ssh-sftp.md)
 6. [Bedrohungsmodell verstehen](06-sicherheit/bedrohungsmodell.md)
 
-## Ich möchte Backups speichern
+Danach erst entscheiden, **wofür** die Box eingesetzt werden soll.
 
-**Zuerst lesen:** [Welche Backup-Methode ist die richtige?](03-backup/welche-backup-methode.md)
+## Ich möchte ein echtes, versioniertes Backup
 
-Danach nach Anwendungsfall:
+**Erste Anlaufstelle:** [Welche Backup-Methode ist die richtige?](03-backup/welche-backup-methode.md)
+
+Kurzfassung:
+
+| Ziel | Empfehlung |
+|---|---|
+| Linux-VPS | **Restic**; Kopia als starke Alternative |
+| mehrere VPS | Restic/Kopia pro System oder zentraler Backuphost |
+| Windows-PC | Restic oder Kopia |
+| maximale Deduplizierung/Kompression | Borg nach HostBrr-Kompatibilitätsprüfung |
+
+Praxis:
 
 - [VPS verschlüsselt mit Restic sichern](09-rezepte/vps-restic.md)
 - [Mehrere VPS zentral sichern](09-rezepte/mehrere-vps-zentral-sichern.md)
-- [Proxmox vzdump + rclone crypt](09-rezepte/proxmox-vzdump-rclone-crypt.md)
 - [Windows-PC sichern](09-rezepte/windows-pc-sichern.md)
+
+Die technische HostBrr-Eignung der Werkzeuge steht zusätzlich in der [Backup-Kompatibilitätsmatrix](03-backup/kompatibilitaetsmatrix.md).
+
+## Ich habe bereits fertige Backup-Dateien oder Archive
+
+Beispiele: Proxmox-`vzdump`, Datenbank-Dumps, exportierte Archive oder große unveränderliche Dateibestände.
+
+**Bevorzugt:** [rclone + SFTP + crypt](03-backup/rclone-sftp-crypt.md), wenn die Offsite-Kopie auf HostBrr clientseitig verschlüsselt sein soll.
+
+Für Proxmox:
+
+→ [Proxmox vzdump + rclone crypt](09-rezepte/proxmox-vzdump-rclone-crypt.md)
+
+Wenn statt einer reinen Offsite-Kopie zusätzlich Repository-Snapshots und Retention gewünscht sind, kommen Restic oder Kopia in Frage.
+
+## Ich möchte einfach Dateien spiegeln oder direkt lesbar ablegen
+
+→ [rsync](03-backup/rsync.md)
+
+Das ist sinnvoll für transparente Kopien und Mirrors. Wichtig: Ein Mirror mit `--delete` ist **keine vollständige Backup-Historie**.
+
+## Ich möchte mein NAS sichern
+
 - [Synology NAS sichern](09-rezepte/synology.md)
 - [QNAP NAS sichern](09-rezepte/qnap.md)
 
-Werkzeugdetails:
-
-- [rsync](03-backup/rsync.md)
-- [rclone + SFTP + crypt](03-backup/rclone-sftp-crypt.md)
-- [Restic](03-backup/restic.md)
-- [BorgBackup](03-backup/borg.md)
-- [Kopia](03-backup/kopia.md)
-- [Kompatibilitätsmatrix](03-backup/kompatibilitaetsmatrix.md)
-
-> **Wichtig:** Die StorageBox ist ein mögliches Backupziel, aber RAID und Provider-Storage ersetzen keine zusätzliche Kopie. Siehe [3-2-1-Strategie](06-sicherheit/3-2-1-strategie.md) und [Zuverlässigkeit, Wartung & Migrationen](11-zuverlaessigkeit.md).
+Bei nativen NAS-Werkzeugen ist rsync ein naheliegendes Zielprotokoll. Verschlüsselung, Versionierung und Restore müssen trotzdem bewusst konfiguriert werden.
 
 ## Ich möchte Nextcloud oder WebDAV
 
@@ -57,7 +81,7 @@ Ergänzend:
 - [Cloud-Laufwerk mit Cache](09-rezepte/cloud-drive-cache.md)
 - [Transfers & Mounts – Troubleshooting](08-troubleshooting/performance-mounts.md)
 
-Ein Mount ist nicht automatisch ein Backup. Für wichtige Daten zusätzlich eine versionierte Sicherung einplanen.
+Ein Mount ist **Storagezugriff, kein Backup**. Für wichtige Daten zusätzlich eine versionierte Sicherung einplanen.
 
 ## Ich muss mehrere Terabyte übertragen
 
@@ -66,6 +90,16 @@ Ein Mount ist nicht automatisch ein Backup. Für wichtige Daten zusätzlich eine
 3. [Große vs. kleine Dateien](07-performance/grosse-kleine-dateien.md)
 4. [Latenz & Routing](07-performance/latenz-routing.md)
 5. [Community-Messwerte](07-performance/messwerte-community.md)
+
+## Ich möchte möglichst wenig von HostBrr-Zusatzsoftware abhängig sein
+
+Bevorzuge Verfahren, die auf der StorageBox nur Standardzugriff brauchen:
+
+- **Restic über SFTP**
+- **Kopia über SFTP**
+- **rclone über SFTP**
+
+Borg ist technisch sehr attraktiv, hängt für das normale Remote-Modell aber stärker von einer kompatiblen Borg-Installation auf HostBrr ab.
 
 ## Ich möchte die StorageBox absichern
 
@@ -77,6 +111,8 @@ Empfohlene Reihenfolge:
 4. [3-2-1-Strategie](06-sicherheit/3-2-1-strategie.md)
 5. [Ransomware & Löschschutz](06-sicherheit/ransomware-loeschschutz.md)
 6. [Zuverlässigkeit, Wartung & Migrationen](11-zuverlaessigkeit.md)
+
+> **Grundregel:** HostBrr-Storage ist eine mögliche Offsite-Kopie, aber nicht automatisch immutable und laut bisheriger Recherche nicht als zusätzliche providerseitige Backupkopie zu behandeln.
 
 ## Etwas funktioniert nicht
 
@@ -103,17 +139,18 @@ Danach das zum eingesetzten Backupverfahren passende Werkzeugkapitel verwenden.
 - [SLA & Haftung](12-rechtliches/sla-haftung.md)
 - [Datenschutz & DSGVO](12-rechtliches/datenschutz-dsgvo.md)
 
-## Die sieben Kerndokumente
+## Die acht Kerndokumente
 
 Wenn du nur einen kleinen Teil der KB lesen möchtest:
 
 1. [Was ist die StorageBox?](01-grundlagen/was-ist-die-storagebox.md)
 2. [DirectAdmin – Ersteinrichtung](02-zugang/directadmin-ersteinrichtung.md)
 3. [Welche Backup-Methode?](03-backup/welche-backup-methode.md)
-4. [Bedrohungsmodell](06-sicherheit/bedrohungsmodell.md)
-5. [3-2-1-Strategie](06-sicherheit/3-2-1-strategie.md)
-6. [Zuverlässigkeit, Wartung & Migrationen](11-zuverlaessigkeit.md)
-7. [Disaster Recovery](09-rezepte/disaster-recovery.md)
+4. [Backup-Kompatibilitätsmatrix](03-backup/kompatibilitaetsmatrix.md)
+5. [Bedrohungsmodell](06-sicherheit/bedrohungsmodell.md)
+6. [3-2-1-Strategie](06-sicherheit/3-2-1-strategie.md)
+7. [Zuverlässigkeit, Wartung & Migrationen](11-zuverlaessigkeit.md)
+8. [Disaster Recovery](09-rezepte/disaster-recovery.md)
 
 ## Status der Knowledge Base
 
