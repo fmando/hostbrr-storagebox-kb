@@ -13,6 +13,7 @@ nav:
       - Was ist die StorageBox?: 01-grundlagen/was-ist-die-storagebox.md
   - Zugang:
       - Übersicht: 02-zugang/index.md
+      - DirectAdmin: 02-zugang/directadmin.md
       - SSH & SFTP: 02-zugang/ssh-sftp.md
   - Backup:
       - Übersicht: 03-backup/index.md
