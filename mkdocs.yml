@@ -11,6 +11,8 @@ nav:
   - Grundlagen:
       - Übersicht: 01-grundlagen/index.md
       - Was ist die StorageBox?: 01-grundlagen/was-ist-die-storagebox.md
+      - Tarife, Standorte & Produktreferenz: 01-grundlagen/tarife-standorte.md
+      - Produktgenerationen & Historie: 01-grundlagen/produktgenerationen.md
       - Ressourcenlimits & Fair Use: 01-grundlagen/ressourcenlimits.md
   - Zugang:
       - Übersicht: 02-zugang/index.md
