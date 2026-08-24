@@ -12,7 +12,9 @@ nav:
       - Übersicht: 01-grundlagen/index.md
       - Was ist die StorageBox?: 01-grundlagen/was-ist-die-storagebox.md
       - Tarife, Standorte & Produktreferenz: 01-grundlagen/tarife-standorte.md
+      - Produkt- und Tarifreferenz: 01-grundlagen/produktreferenz.md
       - Produktgenerationen & Historie: 01-grundlagen/produktgenerationen.md
+      - 2 TB vs. 8 TB: 01-grundlagen/2tb-vs-8tb.md
       - Ressourcenlimits & Fair Use: 01-grundlagen/ressourcenlimits.md
   - Zugang:
       - Übersicht: 02-zugang/index.md
