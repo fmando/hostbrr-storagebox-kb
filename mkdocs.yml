@@ -4,9 +4,14 @@ site_author: fmando
 repo_url: https://github.com/fmando/hostbrr-storagebox-kb
 repo_name: fmando/hostbrr-storagebox-kb
 edit_uri: edit/main/docs/
+site_url: https://fmando.github.io/hostbrr-storagebox-kb/
 
 theme:
   name: material
+  custom_dir: overrides
+  icon:
+    logo: logo
+  favicon: assets/logo.svg
   palette:
     - scheme: default
       primary: indigo
@@ -27,13 +32,23 @@ theme:
     - navigation.path
     - navigation.top
     - navigation.footer
+    - navigation.instant
+    - navigation.instant.progress
     - toc.follow
+    - toc.integrate
     - search.suggest
     - search.highlight
     - search.share
     - content.code.copy
     - content.action.edit
+    - content.action.view
     - content.tabs.link
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/fmando/hostbrr-storagebox-kb
+  generator: false
 
 plugins:
   - search:
@@ -54,6 +69,8 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.emoji
+  - attr_list
+  - md_in_html
   - toc:
       permalink: true
       toc_depth: 3

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-labelledby="title">
+  <title>HostBrr StorageBox KB Logo</title>
+  <rect x="10" y="30" width="80" height="50" rx="7" fill="#3f51b5"/>
+  <rect x="10" y="18" width="80" height="22" rx="7" fill="#5c6bc0"/>
+  <path d="M10 30 L50 50 L90 30" stroke="white" stroke-width="1.8" fill="none" opacity="0.25"/>
+  <rect x="46" y="38" width="8" height="8" rx="1.5" fill="white" opacity="0.9"/>
+  <text x="50" y="64" text-anchor="middle" font-family="Roboto, sans-serif" font-weight="700" font-size="20" fill="white">HB</text>
+  <text x="50" y="74" text-anchor="middle" font-family="Roboto, sans-serif" font-weight="500" font-size="6.5" fill="white" opacity="0.85" letter-spacing="1.2">STORAGEBOX KB</text>
+</svg>
