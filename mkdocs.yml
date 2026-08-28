@@ -1,10 +1,64 @@
 site_name: HostBrr StorageBox Knowledge Base
 site_description: Deutschsprachige, quellenbasierte Dokumentation zur HostBrr StorageBox
+site_author: fmando
 repo_url: https://github.com/fmando/hostbrr-storagebox-kb
 repo_name: fmando/hostbrr-storagebox-kb
+edit_uri: edit/main/docs/
 
 theme:
-  name: mkdocs
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Auf hell umschalten
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Auf dunkel umschalten
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.path
+    - navigation.top
+    - navigation.footer
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.action.edit
+    - content.tabs.link
+
+plugins:
+  - search:
+      lang: de
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.emoji
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - tables
+  - fenced_code
 
 nav:
   - Start: index.md
@@ -96,9 +150,3 @@ nav:
       - Acceptable Use & Fair Use: 12-rechtliches/acceptable-use.md
       - SLA, Verfügbarkeit & Haftung: 12-rechtliches/sla-haftung.md
       - Datenschutz & DSGVO: 12-rechtliches/datenschutz-dsgvo.md
-
-markdown_extensions:
-  - tables
-  - fenced_code
-  - toc:
-      permalink: true
