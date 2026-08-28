@@ -1,86 +1,207 @@
 ---
 title: HostBrr StorageBox Knowledge Base
 status: maintained
-last_reviewed: 2026-08-25
+last_reviewed: 2026-08-28
 ---
 
 # HostBrr StorageBox Knowledge Base
 
-Deutschsprachige, quellenbasierte Wissensdatenbank zur **HostBrr StorageBox** – mit Grundlagen, DirectAdmin, Backup, Sicherheit, Performance, Troubleshooting und praxisorientierten Howtos.
+Deutschsprachige, **quellenbasierte** Wissensdatenbank zur **HostBrr StorageBox** – von Einrichtung über Backup bis Disaster Recovery.
 
-> **Neu hier?** Beginne mit dem [Schnellstart](00-schnellstart.md).  
-> **Du willst sofort ein Backup einrichten?** Öffne [Welche Backup-Methode ist die richtige?](03-backup/welche-backup-methode.md).  
-> **Ein System ist bereits verloren?** Gehe direkt zu [Disaster Recovery](09-rezepte/disaster-recovery.md).
+<div class="grid cards" markdown>
 
-## Klickbares Inhaltsverzeichnis
+- :material-rocket-launch: __Neu hier? Schnellstart__
 
-| Bereich | Worum geht es? | Direkteinstieg |
-|---|---|---|
-| 🚀 **Schnellstart** | Ziel auswählen statt Werkzeug suchen | [Schnellstart & wichtigste Docs](00-schnellstart.md) |
-| 📦 **Grundlagen** | Produkt, Tarife, Generationen, Limits | [Grundlagen](01-grundlagen/index.md) · [Produktreferenz](01-grundlagen/produktreferenz.md) · [Ressourcenlimits](01-grundlagen/ressourcenlimits.md) |
-| 🔐 **Zugang & DirectAdmin** | Ersteinrichtung, SSH, Keys, Cron, SSL, Datenbanken | [DirectAdmin](02-zugang/directadmin.md) · [Ersteinrichtung](02-zugang/directadmin-ersteinrichtung.md) · [SSH/SFTP](02-zugang/ssh-sftp.md) |
-| 💾 **Backup** | Restic, Kopia, Borg, rclone, rsync, Proxmox | [Backup-Übersicht](03-backup/index.md) · [Welche Methode?](03-backup/welche-backup-methode.md) · [Kompatibilitätsmatrix](03-backup/kompatibilitaetsmatrix.md) |
-| 🗂️ **Mounts** | StorageBox als Laufwerk unter Linux/Windows | [Mounts](04-mounts/index.md) · [Linux](04-mounts/linux.md) · [Windows](04-mounts/windows-sshfs.md) |
-| ☁️ **Anwendungen** | Nextcloud, WebDAV und sinnvolle direkte Anwendungen | [Anwendungen](05-anwendungen/index.md) · [Nextcloud](05-anwendungen/nextcloud.md) · [WebDAV](05-anwendungen/webdav.md) |
-| 🛡️ **Sicherheit** | Verschlüsselung, 3-2-1, SSH-Härtung, Ransomware | [Sicherheit](06-sicherheit/index.md) · [Bedrohungsmodell](06-sicherheit/bedrohungsmodell.md) · [3-2-1](06-sicherheit/3-2-1-strategie.md) |
-| ⚡ **Performance** | 10 Gbit/s, kleine Dateien, Routing, Community-Werte | [Performance](07-performance/index.md) · [10 Gbit/s realistisch](07-performance/10gbit-realitaet.md) · [Messwerte](07-performance/messwerte-community.md) |
-| 🧰 **Troubleshooting** | SSH, DirectAdmin, Backuptools, Mounts, Nextcloud | [Troubleshooting](08-troubleshooting/index.md) |
-| 📘 **Rezepte & Howtos** | konkrete Aufgaben von VPS bis NAS und Restore | [Rezepte](09-rezepte/index.md) |
-| 🩺 **Zuverlässigkeit** | Ausfälle, Wartungen, Migrationen, Provider-Backup | [Zuverlässigkeit & Migrationen](11-zuverlaessigkeit.md) |
-| ⚖️ **Rechtliches** | Terms, AUP, SLA/Haftung, DSGVO | [Rechtliches](12-rechtliches/index.md) |
-| 🗺️ **Roadmap** | Reifegrad, offene Punkte und Weg zu v1.0 | [Bestandsaufnahme & Roadmap](10-bestandsaufnahme.md) |
+    ---
+
+    Wähle dein Ziel, nicht das Werkzeug. In 5 Minuten zum richtigen Pfad.
+
+    [:octicons-arrow-right-24: Zum Schnellstart](00-schnellstart.md)
+
+- :material-shield-lock: __Backup zielgerichtet__
+
+    ---
+
+    Restic, Kopia, Borg, rclone & rsync im direkten Vergleich.
+
+    [:octicons-arrow-right-24: Welche Methode?](03-backup/welche-backup-methode.md)
+
+- :material-life-buoy: __Server verloren?__
+
+    ---
+
+    Nicht überschreiben – strukturiert wiederherstellen.
+
+    [:octicons-arrow-right-24: Disaster Recovery](09-rezepte/disaster-recovery.md)
+
+</div>
+
+---
+
+## Bereiche im Überblick
+
+<div class="grid cards" markdown>
+
+- :material-package-variant-closed: __Grundlagen__
+
+    ---
+
+    Produkt, Tarife, Generationen, Limits & Fair Use.
+
+    [:octicons-arrow-right-24: Grundlagen](01-grundlagen/index.md)
+
+- :material-login: __Zugang & DirectAdmin__
+
+    ---
+
+    Ersteinrichtung, SSH/SFTP, Keys, Cron, SSL, Datenbanken.
+
+    [:octicons-arrow-right-24: Zugang](02-zugang/index.md)
+
+- :material-backup-restore: __Backup__
+
+    ---
+
+    Kompatibilitätsmatrix, rsync, rclone crypt, Borg, Restic, Kopia, Proxmox.
+
+    [:octicons-arrow-right-24: Backup](03-backup/index.md)
+
+- :material-harddisk: __Mounts__
+
+    ---
+
+    StorageBox als Laufwerk unter Linux & Windows (SSHFS).
+
+    [:octicons-arrow-right-24: Mounts](04-mounts/index.md)
+
+- :material-cloud: __Anwendungen__
+
+    ---
+
+    Nextcloud, WebDAV & was direkt auf der Box läuft.
+
+    [:octicons-arrow-right-24: Anwendungen](05-anwendungen/index.md)
+
+- :material-security: __Sicherheit__
+
+    ---
+
+    Bedrohungsmodell, Verschlüsselung, 3-2-1, Ransomware-Schutz.
+
+    [:octicons-arrow-right-24: Sicherheit](06-sicherheit/index.md)
+
+- :material-speedometer: __Performance__
+
+    ---
+
+    10 Gbit/s Realität, kleine vs. große Dateien, Routing.
+
+    [:octicons-arrow-right-24: Performance](07-performance/index.md)
+
+- :material-wrench: __Troubleshooting__
+
+    ---
+
+    SSH/SFTP, Quota, Cron, Backup-Tools, Mounts, Nextcloud.
+
+    [:octicons-arrow-right-24: Troubleshooting](08-troubleshooting/index.md)
+
+- :material-book-open-page-variant: __Rezepte & Howtos__
+
+    ---
+
+    Konkrete Anleitungen für VPS, NAS, Nextcloud & Migration.
+
+    [:octicons-arrow-right-24: Rezepte](09-rezepte/index.md)
+
+</div>
+
+---
 
 ## Die wichtigsten Praxis-Howtos
 
-| Aufgabe | Empfohlener Einstieg |
-|---|---|
-| Linux-VPS verschlüsselt und versioniert sichern | [VPS mit Restic](09-rezepte/vps-restic.md) |
-| mehrere VPS auf eine StorageBox sichern | [Mehrere VPS zentral sichern](09-rezepte/mehrere-vps-zentral-sichern.md) |
-| Proxmox-Backups offsite speichern | [vzdump + rclone crypt](09-rezepte/proxmox-vzdump-rclone-crypt.md) |
-| Windows-PC sichern | [Windows-PC sichern](09-rezepte/windows-pc-sichern.md) |
-| Synology sichern | [Synology → HostBrr](09-rezepte/synology.md) |
-| QNAP sichern | [QNAP → HostBrr](09-rezepte/qnap.md) |
-| Nextcloud ohne zusätzlichen VPS | [Nextcloud direkt auf HostBrr](09-rezepte/nextcloud-direkt.md) |
-| Nextcloud mit eigenem VPS | [Nextcloud VPS + StorageBox](09-rezepte/nextcloud-vps-storagebox.md) |
-| StorageBox als Cloud-Laufwerk | [Cloud-Laufwerk mit Cache](09-rezepte/cloud-drive-cache.md) |
-| mehrere TB erstmals hochladen | [Initiale Datenübertragung](09-rezepte/initiale-datenuebertragung.md) |
-| kompletter Serververlust | [Disaster Recovery](09-rezepte/disaster-recovery.md) |
+<div class="grid cards" markdown>
 
-## Backup-Werkzeuge
+- :material-server: __Linux-VPS sichern__
 
-- [Restic](03-backup/restic.md) – Standardempfehlung für versionierte Server-Backups über SFTP.
-- [Kopia](03-backup/kopia.md) – Snapshot-Backup mit Policies und optionaler GUI.
-- [BorgBackup](03-backup/borg.md) – sehr effizient, serverseitige Borg-Kompatibilität auf HostBrr beachten.
-- [rclone + crypt](03-backup/rclone-sftp-crypt.md) – ideal für verschlüsselte Offsite-Kopien fertiger Archive.
-- [rsync](03-backup/rsync.md) – transparent und direkt lesbar, aber im Grundbetrieb keine Snapshot-Historie.
+    ---
+
+    Verschlüsselt & versioniert mit Restic über SFTP.
+
+    [:octicons-arrow-right-24: VPS mit Restic](09-rezepte/vps-restic.md)
+
+- :material-server-network: __Mehrere VPS zentral__
+
+    ---
+
+    Ein Backuphost für alle Systeme.
+
+    [:octicons-arrow-right-24: Zentral sichern](09-rezepte/mehrere-vps-zentral-sichern.md)
+
+- :material-microsoft-windows: __Windows-PC__
+
+    ---
+
+    PC-Backup direkt auf die StorageBox.
+
+    [:octicons-arrow-right-24: Windows-PC](09-rezepte/windows-pc-sichern.md)
+
+- :material-nas: __Synology / QNAP__
+
+    ---
+
+    NAS nativ via rsync/SFTP sichern.
+
+    [:octicons-arrow-right-24: Synology](09-rezepte/synology.md) · [QNAP](09-rezepte/qnap.md)
+
+- :material-nextcloud: __Nextcloud__
+
+    ---
+
+    Direkt auf der Box oder VPS + StorageBox entkoppelt.
+
+    [:octicons-arrow-right-24: Direkt](09-rezepte/nextcloud-direkt.md) · [VPS](09-rezepte/nextcloud-vps-storagebox.md)
+
+- :material-restore: __Disaster Recovery__
+
+    ---
+
+    Kompletter Serververlust – Schritt für Schritt.
+
+    [:octicons-arrow-right-24: Recovery](09-rezepte/disaster-recovery.md)
+
+</div>
+
+---
+
+## Backup-Werkzeuge kurz
+
+- [:material-shield-check: **Restic**](03-backup/restic.md) – Standardempfehlung für versionierte Server-Backups über SFTP.
+- [:material-checkbox-marked-circle-auto-outline: **Kopia**](03-backup/kopia.md) – Snapshot-Backup mit Policies und GUI.
+- [:material-database: **BorgBackup**](03-backup/borg.md) – sehr effizient, HostBrr-Kompatibilität prüfen.
+- [:material-lock: **rclone + crypt**](03-backup/rclone-sftp-crypt.md) – verschlüsselte Offsite-Kopien fertiger Archive.
+- [:material-sync: **rsync**](03-backup/rsync.md) – transparent, aber ohne Snapshot-Historie.
+
+---
 
 ## DirectAdmin schnell erreichbar
 
-- [Übersicht](02-zugang/directadmin.md)
-- [Ersteinrichtung](02-zugang/directadmin-ersteinrichtung.md)
-- [File Manager & Pfade](02-zugang/directadmin-filemanager-pfade.md)
-- [SSH-Key einrichten](02-zugang/directadmin-ssh-key.md)
-- [Cronjobs](02-zugang/directadmin-cronjobs.md)
-- [Domains & SSL](02-zugang/directadmin-domains-ssl.md)
-- [Datenbanken](02-zugang/directadmin-datenbanken.md)
-- [PHP & LiteSpeed](02-zugang/directadmin-php-litespeed.md)
-- [Softaculous](02-zugang/directadmin-softaculous.md)
-- [API & Automatisierung](02-zugang/directadmin-api.md)
+[Übersicht](02-zugang/directadmin.md) · [Ersteinrichtung](02-zugang/directadmin-ersteinrichtung.md) · [File Manager](02-zugang/directadmin-filemanager-pfade.md) · [SSH-Key](02-zugang/directadmin-ssh-key.md) · [Cronjobs](02-zugang/directadmin-cronjobs.md) · [Domains & SSL](02-zugang/directadmin-domains-ssl.md) · [Datenbanken](02-zugang/directadmin-datenbanken.md) · [PHP & LiteSpeed](02-zugang/directadmin-php-litespeed.md) · [Softaculous](02-zugang/directadmin-softaculous.md) · [API](02-zugang/directadmin-api.md)
+
+---
 
 ## Statusmodell
 
-Die vorhandenen Dokumente verwenden das Frontmatter-Feld `status` sowohl für redaktionellen Reifegrad als auch für den Evidenzgrad HostBrr-spezifischer Aussagen. Zulässige Werte sind:
+Die Dokumente nutzen `status` für Reifegrad & Evidenzgrad:
 
 | Status | Bedeutung |
 |---|---|
-| `maintained` | redaktionell gepflegter Artikel |
-| `draft` | inhaltlicher Entwurf, noch nicht vollständig |
-| `research` | Recherche-/Bewertungsphase |
-| `official` | Kernaussagen durch HostBrr bzw. eine Primärquelle dokumentiert |
-| `community-reported` | HostBrr-spezifische Praxisangabe aus Community-Berichten, noch nicht selbst geprüft |
-| `verified` | praktisch auf einer aktuellen StorageBox selbst getestet |
-| `deprecated` | veraltet oder einer älteren Produktgeneration zuzuordnen |
+| `maintained` | redaktionell gepflegt |
+| `draft` | Entwurf, unvollständig |
+| `research` | Recherchephase |
+| `official` | durch HostBrr/Primärquelle belegt |
+| `community-reported` | Community-Bericht, ungeprüft |
+| `verified` | selbst auf StorageBox getestet |
+| `deprecated` | veraltet |
 
-Langfristig kann das Frontmatter in getrennte Felder für **Dokumentreife** und **Evidenzstatus** aufgeteilt werden. Bis dahin sind die oben genannten Werte die gemeinsame Konvention.
-
-Aussagen aus Foren werden nicht ungeprüft zu Fakten erklärt. Relevante Fundstellen werden unter `sources/` dokumentiert und anschließend in die eigentliche Dokumentation konsolidiert. Eigene praktische Tests folgen in einer späteren Phase.
+> Quellen liegen unter `sources/` und werden erst nach Prüfung in die Doku übernommen.
