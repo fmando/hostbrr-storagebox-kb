@@ -1,0 +1,4944 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Deutschsprachige, quellenbasierte Dokumentation zur HostBrr StorageBox">
+      
+      
+        <meta name="author" content="fmando">
+      
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../directadmin-ersteinrichtung/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>DirectAdmin auf der HostBrr StorageBox - HostBrr StorageBox Knowledge Base</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#directadmin-auf-der-hostbrr-storagebox" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="HostBrr StorageBox Knowledge Base" class="md-header__button md-logo" aria-label="HostBrr StorageBox Knowledge Base" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            HostBrr StorageBox Knowledge Base
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              DirectAdmin auf der HostBrr StorageBox
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Auf hell umschalten"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Auf hell umschalten" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Auf dunkel umschalten"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Auf dunkel umschalten" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/fmando/hostbrr-storagebox-kb" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    fmando/hostbrr-storagebox-kb
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Start
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../00-schnellstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Schnellstart & wichtigste Docs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../01-grundlagen/" class="md-tabs__link">
+          
+  
+  
+  Grundlagen
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Zugang
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../03-backup/" class="md-tabs__link">
+          
+  
+  
+  Backup
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../04-mounts/" class="md-tabs__link">
+          
+  
+  
+  Mounts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../05-anwendungen/" class="md-tabs__link">
+          
+  
+  
+  Anwendungen
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../06-sicherheit/" class="md-tabs__link">
+          
+  
+  
+  Sicherheit
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../07-performance/" class="md-tabs__link">
+          
+  
+  
+  Performance
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../08-troubleshooting/" class="md-tabs__link">
+          
+  
+  
+  Troubleshooting
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../09-rezepte/" class="md-tabs__link">
+          
+  
+  
+  Rezepte & Howtos
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../10-bestandsaufnahme/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Bestandsaufnahme & Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../11-zuverlaessigkeit/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Zuverlässigkeit, Wartung & Migrationen
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../12-rechtliches/" class="md-tabs__link">
+          
+  
+  
+  Rechtliches & Vertrag
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="HostBrr StorageBox Knowledge Base" class="md-nav__button md-logo" aria-label="HostBrr StorageBox Knowledge Base" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    HostBrr StorageBox Knowledge Base
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/fmando/hostbrr-storagebox-kb" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    fmando/hostbrr-storagebox-kb
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Start
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--maintained"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-schnellstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Schnellstart & wichtigste Docs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Grundlagen
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Grundlagen
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-grundlagen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Übersicht
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--maintained"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-grundlagen/was-ist-die-storagebox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Was ist die StorageBox?
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--official-plus-community"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-grundlagen/tarife-standorte/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tarife, Standorte & Produktreferenz
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--maintained"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-grundlagen/produktreferenz/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Produkt- und Tarifreferenz
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--maintained"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-grundlagen/produktgenerationen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Produktgenerationen & Historie
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--maintained"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-grundlagen/2tb-vs-8tb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 TB vs. 8 TB
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--planned-verification"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-grundlagen/ressourcenlimits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ressourcenlimits & Fair Use
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--community-reported"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zugang
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Zugang
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Übersicht
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--maintained"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DirectAdmin
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    DirectAdmin
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Übersicht
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--official-plus-hostbrr-review"></span>
+  
+
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Übersicht
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--official-plus-hostbrr-review"></span>
+  
+
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-directadmin-offnen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. DirectAdmin öffnen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-evolution-oberflache" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Evolution-Oberfläche
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-welche-rolle-hat-directadmin-bei-der-storagebox" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Welche Rolle hat DirectAdmin bei der StorageBox?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-account-absichern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Account absichern
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-ssh-und-ssh-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. SSH und SSH-Keys
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-file-manager-und-verzeichnisstruktur" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. File Manager und Verzeichnisstruktur
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-cronjobs-besonders-wichtig-fur-backups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Cronjobs – besonders wichtig für Backups
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-domains-und-subdomains" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Domains und Subdomains
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-ssl-lets-encrypt-acme" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. SSL / Let's Encrypt / ACME
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-datenbanken" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Datenbanken
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-softaculous-und-anwendungen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Softaculous und Anwendungen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-directadmin-api-spater-interessant-fur-automatisierung" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. DirectAdmin API – später interessant für Automatisierung
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-was-directadmin-nicht-bedeutet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Was DirectAdmin nicht bedeutet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-geplanter-hostbrr-screenshot-menuatlas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Geplanter HostBrr-Screenshot-/Menüatlas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-checkliste-nach-bestellung-einer-storagebox" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. Checkliste nach Bestellung einer StorageBox
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#weiterfuhrende-dokumentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Weiterführende Dokumentation
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../directadmin-ersteinrichtung/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ersteinrichtung
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--community-reported"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../directadmin-filemanager-pfade/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Manager & Pfade
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--community-reported"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../directadmin-ssh-key/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SSH-Key einrichten
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--community-reported"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../directadmin-cronjobs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cronjobs
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--community-reported"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../directadmin-domains-ssl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Domains & SSL
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--official"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../directadmin-datenbanken/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Datenbanken
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--community-reported"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../directadmin-php-litespeed/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PHP & LiteSpeed
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--community-reported"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../directadmin-softaculous/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Softaculous
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--community-reported"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../directadmin-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API & Automatisierung
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--community-reported"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ssh-sftp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SSH & SFTP
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--community-reported"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backup
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Backup
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-backup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Übersicht
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--maintained"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-backup/welche-backup-methode/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Welche Methode?
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--maintained"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-backup/kompatibilitaetsmatrix/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kompatibilitätsmatrix
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--maintained"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-backup/rsync/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    rsync
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--community-reported"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-backup/rclone-sftp-crypt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    rclone + SFTP + crypt
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--community-reported"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-backup/borg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BorgBackup
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--community-reported"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-backup/restic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Restic
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--community-reported"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-backup/kopia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kopia
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--community-reported"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-backup/proxmox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Proxmox
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--community-reported"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mounts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Mounts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-mounts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Übersicht
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--maintained"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-mounts/linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--community-reported"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-mounts/windows-sshfs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Windows mit SSHFS
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--community-reported"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Anwendungen
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Anwendungen
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-anwendungen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Übersicht
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--maintained"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-anwendungen/was-laeuft-direkt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Was läuft direkt?
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--community-reported"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-anwendungen/nextcloud/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nextcloud
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--community-reported"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-anwendungen/webdav/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WebDAV
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--community-reported"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sicherheit
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Sicherheit
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-sicherheit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Übersicht
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--maintained"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-sicherheit/bedrohungsmodell/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bedrohungsmodell
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--maintained"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-sicherheit/verschluesselung/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Verschlüsselung
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--maintained"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-sicherheit/ssh-key-haertung/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SSH-Key-Härtung
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--maintained"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-sicherheit/3-2-1-strategie/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-2-1-Strategie
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--maintained"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-sicherheit/ransomware-loeschschutz/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ransomware & Löschschutz
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--maintained"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Performance
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Performance
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-performance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Übersicht
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--maintained"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-performance/10gbit-realitaet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 Gbit/s in der Praxis
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--community-reported"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-performance/grosse-kleine-dateien/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Große vs. kleine Dateien
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--community-reported"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-performance/latenz-routing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Latenz & Routing
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--community-reported"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-performance/messwerte-community/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Community-Messwerte
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--community-reported"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Troubleshooting
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Übersicht
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--maintained"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-troubleshooting/ssh-sftp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SSH & SFTP
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--maintained"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-troubleshooting/directadmin-quota-cron/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DirectAdmin, Quota & Cron
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--maintained"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-troubleshooting/backup-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backup-Tools
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--maintained"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-troubleshooting/performance-mounts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transfers & Mounts
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--maintained"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-troubleshooting/nextcloud/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nextcloud
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--maintained"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rezepte & Howtos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Rezepte & Howtos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-rezepte/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Übersicht
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--maintained"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_11_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_11_2" id="__nav_11_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Server & Virtualisierung
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_11_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Server & Virtualisierung
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-rezepte/vps-restic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VPS mit Restic sichern
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--maintained"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-rezepte/mehrere-vps-zentral-sichern/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mehrere VPS zentral sichern
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-rezepte/proxmox-vzdump-rclone-crypt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Proxmox vzdump + rclone crypt
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--maintained"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_11_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_11_3" id="__nav_11_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NAS & Clients
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_11_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    NAS & Clients
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-rezepte/synology/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Synology NAS sichern
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-rezepte/qnap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    QNAP NAS sichern
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-rezepte/windows-pc-sichern/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Windows-PC sichern
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--maintained"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_11_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_11_4" id="__nav_11_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nextcloud
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_11_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Nextcloud
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-rezepte/nextcloud-direkt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Direkt auf der StorageBox
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-rezepte/nextcloud-vps-storagebox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VPS + StorageBox
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_11_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_11_5" id="__nav_11_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Datenzugriff & Migration
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_11_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Datenzugriff & Migration
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-rezepte/cloud-drive-cache/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cloud-Laufwerk mit Cache
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--community-reported"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-rezepte/initiale-datenuebertragung/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Große Datenmengen übertragen
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_11_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_11_6" id="__nav_11_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wiederherstellung
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_11_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Wiederherstellung
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-rezepte/disaster-recovery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Disaster Recovery
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--draft"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-bestandsaufnahme/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bestandsaufnahme & Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-zuverlaessigkeit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zuverlässigkeit, Wartung & Migrationen
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--researched"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rechtliches & Vertrag
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Rechtliches & Vertrag
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-rechtliches/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Übersicht
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--maintained"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-rechtliches/terms-storagebox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Terms für StorageBox-Nutzer
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--official"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-rechtliches/acceptable-use/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Acceptable Use & Fair Use
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--official"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-rechtliches/sla-haftung/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SLA, Verfügbarkeit & Haftung
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--maintained"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-rechtliches/datenschutz-dsgvo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Datenschutz & DSGVO
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--official"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-directadmin-offnen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. DirectAdmin öffnen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-evolution-oberflache" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Evolution-Oberfläche
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-welche-rolle-hat-directadmin-bei-der-storagebox" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Welche Rolle hat DirectAdmin bei der StorageBox?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-account-absichern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Account absichern
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-ssh-und-ssh-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. SSH und SSH-Keys
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-file-manager-und-verzeichnisstruktur" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. File Manager und Verzeichnisstruktur
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-cronjobs-besonders-wichtig-fur-backups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Cronjobs – besonders wichtig für Backups
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-domains-und-subdomains" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Domains und Subdomains
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-ssl-lets-encrypt-acme" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. SSL / Let's Encrypt / ACME
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-datenbanken" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Datenbanken
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-softaculous-und-anwendungen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Softaculous und Anwendungen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-directadmin-api-spater-interessant-fur-automatisierung" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. DirectAdmin API – später interessant für Automatisierung
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-was-directadmin-nicht-bedeutet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Was DirectAdmin nicht bedeutet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-geplanter-hostbrr-screenshot-menuatlas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Geplanter HostBrr-Screenshot-/Menüatlas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-checkliste-nach-bestellung-einer-storagebox" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. Checkliste nach Bestellung einer StorageBox
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#weiterfuhrende-dokumentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Weiterführende Dokumentation
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Start
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Zugang
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="./" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    DirectAdmin
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/fmando/hostbrr-storagebox-kb/edit/main/docs/02-zugang/directadmin.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="directadmin-auf-der-hostbrr-storagebox">DirectAdmin auf der HostBrr StorageBox<a class="headerlink" href="#directadmin-auf-der-hostbrr-storagebox" title="Permanent link">&para;</a></h1>
+<p>DirectAdmin ist bei der HostBrr StorageBox nicht nur ein Webhosting-Panel, sondern die zentrale Verwaltungsoberfläche für viele Funktionen der Box. Da die StorageBox <strong>kein Root-VPS</strong> ist, werden zahlreiche Aufgaben, die man auf einem eigenen Linux-Server als root erledigen würde, stattdessen über DirectAdmin oder innerhalb des eigenen Benutzerkontos ausgeführt.</p>
+<blockquote>
+<p>Wichtig: Welche Menüpunkte tatsächlich sichtbar sind, hängt vom von HostBrr freigeschalteten Paket und der eingesetzten DirectAdmin-Version ab. Die allgemeine DirectAdmin-Dokumentation beschreibt auch Funktionen für Server-Administratoren, die ein normaler StorageBox-Benutzer nicht besitzt.</p>
+</blockquote>
+<h2 id="1-directadmin-offnen">1. DirectAdmin öffnen<a class="headerlink" href="#1-directadmin-offnen" title="Permanent link">&para;</a></h2>
+<p>DirectAdmin lauscht standardmäßig auf TCP-Port <code>2222</code>. Die konkrete URL, der Hostname und die Zugangsdaten der StorageBox sollten jedoch immer aus der HostBrr-Welcome-Mail bzw. dem Kundenbereich übernommen werden.</p>
+<p>Allgemeines Schema:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>https://HOSTNAME:2222/
+</code></pre></div>
+<p>Offizielle Dokumentation:</p>
+<ul>
+<li><a href="https://docs.directadmin.com/directadmin/general-usage/">DirectAdmin – General Usage / Accessing DirectAdmin Panel</a></li>
+</ul>
+<h2 id="2-evolution-oberflache">2. Evolution-Oberfläche<a class="headerlink" href="#2-evolution-oberflache" title="Permanent link">&para;</a></h2>
+<p>Bei aktuellen DirectAdmin-Installationen ist <strong>Evolution</strong> die moderne Standardoberfläche. DirectAdmin beschreibt daneben noch den älteren <code>Enhanced</code>-Skin. Menübezeichnungen können sich deshalb zwischen Screenshots, älteren Forenbeiträgen und der aktuellen HostBrr-Installation unterscheiden.</p>
+<p>Offizielle Dokumentation:</p>
+<ul>
+<li><a href="https://docs.directadmin.com/directadmin/skins-and-templates/evolution.html">DirectAdmin – Evolution Skin</a></li>
+<li><a href="https://docs.directadmin.com/directadmin/skins-and-templates/">DirectAdmin – Skins and Templates</a></li>
+</ul>
+<h2 id="3-welche-rolle-hat-directadmin-bei-der-storagebox">3. Welche Rolle hat DirectAdmin bei der StorageBox?<a class="headerlink" href="#3-welche-rolle-hat-directadmin-bei-der-storagebox" title="Permanent link">&para;</a></h2>
+<p>Für unsere KB betrachten wir DirectAdmin in acht Funktionsgruppen:</p>
+<table>
+<thead>
+<tr>
+<th>Bereich</th>
+<th>Typische Aufgabe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Account</td>
+<td>Passwort, 2FA, Login-Sicherheit</td>
+</tr>
+<tr>
+<td>Dateien</td>
+<td>File Manager, Verzeichnisse, Rechte</td>
+</tr>
+<tr>
+<td>SSH</td>
+<td>SSH-Keys und Zugang vorbereiten</td>
+</tr>
+<tr>
+<td>Cron</td>
+<td>automatische Backup-/Synchronisationsjobs</td>
+</tr>
+<tr>
+<td>Domains</td>
+<td>Domains und Subdomains verwalten</td>
+</tr>
+<tr>
+<td>SSL</td>
+<td>TLS-Zertifikate / ACME / Let's Encrypt</td>
+</tr>
+<tr>
+<td>Datenbanken</td>
+<td>Datenbanken für Webanwendungen</td>
+</tr>
+<tr>
+<td>Anwendungen</td>
+<td>Softaculous bzw. bereitgestellte Webapps</td>
+</tr>
+</tbody>
+</table>
+<p>Welche dieser Funktionen HostBrr auf einer konkreten StorageBox freischaltet, muss paket- bzw. generationsbezogen dokumentiert werden.</p>
+<h2 id="4-account-absichern">4. Account absichern<a class="headerlink" href="#4-account-absichern" title="Permanent link">&para;</a></h2>
+<p>Nach der Ersteinrichtung sollte die Absicherung des DirectAdmin-Kontos zu den ersten Schritten gehören.</p>
+<p>DirectAdmin unterstützt unter anderem <strong>Two-Step Authentication (2FA)</strong>. Laut offizieller Dokumentation befindet sich die Funktion im Benutzerbereich unter <code>Change your Password</code> → <code>Two-Step Authentication</code>; die genaue Darstellung kann im Evolution-Skin variieren.</p>
+<p>Offizielle Dokumentation:</p>
+<ul>
+<li><a href="https://docs.directadmin.com/directadmin/general-usage/securing-da-panel.html">DirectAdmin – Securing DirectAdmin</a></li>
+</ul>
+<p>Empfehlung für die StorageBox:</p>
+<ol>
+<li>eigenes starkes DirectAdmin-Passwort verwenden,</li>
+<li>2FA aktivieren, sofern von HostBrr freigeschaltet,</li>
+<li>für automatisierte SSH-Aufgaben SSH-Keys statt Account-Passwort verwenden,</li>
+<li>keine Zugangsdaten in Skripten oder im Git-Repository speichern.</li>
+</ol>
+<h2 id="5-ssh-und-ssh-keys">5. SSH und SSH-Keys<a class="headerlink" href="#5-ssh-und-ssh-keys" title="Permanent link">&para;</a></h2>
+<p>SSH ist für die StorageBox besonders wichtig, weil darauf unter anderem SFTP, rsync und verschiedene Backupverfahren aufbauen.</p>
+<p>Die eigentliche SSH-Konfiguration des Servers kontrolliert HostBrr. Der Benutzer verwaltet nur die ihm zur Verfügung gestellten Funktionen und seine Schlüssel.</p>
+<p>Unser ausführliches HostBrr-Howto:</p>
+<ul>
+<li><a href="../ssh-sftp/">SSH &amp; SFTP</a></li>
+</ul>
+<p>Allgemeine DirectAdmin-Dokumentation:</p>
+<ul>
+<li><a href="https://docs.directadmin.com/operation-system-level/os-general/managing-with-ssh.html">DirectAdmin – Managing with SSH</a></li>
+</ul>
+<blockquote>
+<p>Hostname, Benutzername und insbesondere ein eventuell abweichender SSH-Port sollten <strong>nicht aus alten Forenbeiträgen übernommen</strong> werden. Maßgeblich sind die Zugangsdaten der eigenen StorageBox.</p>
+</blockquote>
+<h2 id="6-file-manager-und-verzeichnisstruktur">6. File Manager und Verzeichnisstruktur<a class="headerlink" href="#6-file-manager-und-verzeichnisstruktur" title="Permanent link">&para;</a></h2>
+<p>Der File Manager eignet sich für interaktive Arbeiten wie:</p>
+<ul>
+<li>Verzeichnisse anlegen,</li>
+<li>kleine Dateien hoch- oder herunterladen,</li>
+<li>Dateien umbenennen,</li>
+<li>Dateirechte prüfen,</li>
+<li>Webdateien verwalten.</li>
+</ul>
+<p>Für große Datenmengen und regelmäßige Backups sind dagegen SFTP, rsync, rclone, Borg oder Restic meist geeigneter.</p>
+<p>Bei DirectAdmin liegen Benutzerinhalte typischerweise unter <code>/home/USERNAME/</code>. Die exakte für HostBrr sichtbare Verzeichnisstruktur dokumentieren wir erst als <code>verified</code>, wenn sie auf einer aktuellen StorageBox geprüft wurde.</p>
+<p>Hintergrund zur DirectAdmin-Verzeichnisstruktur:</p>
+<ul>
+<li><a href="https://docs.directadmin.com/directadmin/general-usage/directories-and-locations.html">DirectAdmin – Directories and Locations</a></li>
+</ul>
+<h2 id="7-cronjobs-besonders-wichtig-fur-backups">7. Cronjobs – besonders wichtig für Backups<a class="headerlink" href="#7-cronjobs-besonders-wichtig-fur-backups" title="Permanent link">&para;</a></h2>
+<p>Cronjobs sind für unsere StorageBox-KB zentral. Damit können wiederkehrende Aufgaben ohne laufenden eigenen VPS-Prozess gestartet werden, beispielsweise:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>VPS
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  ↑
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  │ rsync über SSH
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  │
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>HostBrr StorageBox
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>  └─ DirectAdmin Cronjob startet den Pull
+</code></pre></div>
+<p>Community-Berichte zeigen genau dieses Muster für regelmäßige rsync-Backups. Vor produktivem Einsatz sollte jeder Befehl zunächst manuell über SSH getestet werden.</p>
+<p>Bei Cronjobs beachten:</p>
+<ul>
+<li>immer absolute Pfade verwenden,</li>
+<li>Ausgabe/Fehler protokollieren,</li>
+<li>keine Passwörter in die Kommandozeile schreiben,</li>
+<li>SSH-Key-Authentifizierung verwenden,</li>
+<li>Überschneidungen lang laufender Jobs vermeiden,</li>
+<li>Speicher- und Ressourcenlimits der Shared-Hosting-Umgebung berücksichtigen.</li>
+</ul>
+<p>DirectAdmin speichert Benutzer-Cronjobs intern in einer eigenen Konfiguration; ob und welche Cron-Funktion verfügbar ist, kann vom Benutzerpaket abhängen.</p>
+<h2 id="8-domains-und-subdomains">8. Domains und Subdomains<a class="headerlink" href="#8-domains-und-subdomains" title="Permanent link">&para;</a></h2>
+<p>Die StorageBox kann mehr als ein reines SFTP-Ziel sein. HostBrr stellt Webhosting-Funktionen bereit, weshalb Domains/Subdomains beispielsweise für folgende Zwecke interessant sind:</p>
+<ul>
+<li>Nextcloud,</li>
+<li>WebDAV/Webanwendungen,</li>
+<li>statische Downloadbereiche,</li>
+<li>eigene Status- oder Landingpages.</li>
+</ul>
+<p>Eine Domain sollte nur dann auf die StorageBox zeigen, wenn der entsprechende Dienst tatsächlich öffentlich erreichbar sein soll.</p>
+<h2 id="9-ssl-lets-encrypt-acme">9. SSL / Let's Encrypt / ACME<a class="headerlink" href="#9-ssl-lets-encrypt-acme" title="Permanent link">&para;</a></h2>
+<p>DirectAdmin besitzt integrierte ACME-Unterstützung und kann unter anderem kostenlose Zertifikate von Let's Encrypt bzw. anderen unterstützten ACME-Anbietern ausstellen und erneuern. Im User Level befindet sich die Zertifikatsverwaltung unter <code>SSL Certificates</code>, sofern die Funktion vom Provider aktiviert wurde.</p>
+<p>Offizielle Dokumentation:</p>
+<ul>
+<li><a href="https://docs.directadmin.com/webservices/ssl/ssl-and-letsencrypt-for-domains.html">DirectAdmin – SSL and Let's Encrypt for Domains</a></li>
+</ul>
+<p>Das ist insbesondere relevant, wenn auf der StorageBox Nextcloud oder eine andere Webanwendung unter einer eigenen Domain betrieben wird.</p>
+<h2 id="10-datenbanken">10. Datenbanken<a class="headerlink" href="#10-datenbanken" title="Permanent link">&para;</a></h2>
+<p>HostBrr bewirbt bei der StorageBox auch Webhosting-/Datenbankfunktionen. DirectAdmin dient dabei als Verwaltungsoberfläche für die vom Paket bereitgestellten Datenbanken.</p>
+<p>Für unsere KB müssen wir noch praktisch erfassen:</p>
+<ul>
+<li>welches DB-System HostBrr aktuell bereitstellt,</li>
+<li>welche Version,</li>
+<li>Datenbank-/Benutzerlimits,</li>
+<li>Speicherlimits,</li>
+<li>Zugriff nur lokal oder auch remote,</li>
+<li>Backup- und Restoremöglichkeiten.</li>
+</ul>
+<p>Gerade für Nextcloud ist die Datenbank relevant. Die StorageBox sollte jedoch nicht automatisch wie ein eigener Datenbankserver behandelt werden: CPU-, RAM- und I/O-Ressourcen unterliegen Shared-Hosting-/LVE-Limits.</p>
+<h2 id="11-softaculous-und-anwendungen">11. Softaculous und Anwendungen<a class="headerlink" href="#11-softaculous-und-anwendungen" title="Permanent link">&para;</a></h2>
+<p>HostBrr nennt Softaculous und die Möglichkeit, Webanwendungen wie Nextcloud zu installieren. Softaculous ist dabei ein zusätzlicher Installer innerhalb bzw. neben der Hosting-Verwaltung und <strong>nicht Teil von DirectAdmin selbst</strong>.</p>
+<p>Offizielle Links:</p>
+<ul>
+<li><a href="https://www.softaculous.com/">Softaculous</a></li>
+<li><a href="https://nextcloud.com/">Nextcloud</a></li>
+<li><a href="https://docs.nextcloud.com/server/latest/admin_manual/">Nextcloud Admin Manual</a></li>
+</ul>
+<p>Unser HostBrr-spezifischer Artikel:</p>
+<ul>
+<li><a href="../../05-anwendungen/nextcloud/">Nextcloud auf der StorageBox</a></li>
+</ul>
+<h2 id="12-directadmin-api-spater-interessant-fur-automatisierung">12. DirectAdmin API – später interessant für Automatisierung<a class="headerlink" href="#12-directadmin-api-spater-interessant-fur-automatisierung" title="Permanent link">&para;</a></h2>
+<p>DirectAdmin besitzt eine API. Aktuelle Versionen stellen eine neue JSON-API unter <code>/api/...</code> bereit; daneben existiert die ältere <code>CMD_API_...</code>-Schnittstelle. Im Evolution-Skin gibt es außerdem eine <strong>Live API Documentation</strong>.</p>
+<p>Offizielle Dokumentation:</p>
+<ul>
+<li><a href="https://docs.directadmin.com/developer/api/">DirectAdmin – API Access</a></li>
+</ul>
+<p>Für die KB ist das später interessant, um beispielsweise Informationen automatisiert auszulesen. Ob HostBrr alle dafür benötigten API-Funktionen für StorageBox-Benutzer freigibt, muss vor Nutzung geprüft werden.</p>
+<h2 id="13-was-directadmin-nicht-bedeutet">13. Was DirectAdmin nicht bedeutet<a class="headerlink" href="#13-was-directadmin-nicht-bedeutet" title="Permanent link">&para;</a></h2>
+<p>Der wichtigste Punkt für das Verständnis der StorageBox:</p>
+<p><strong>DirectAdmin-Zugang ist kein Root-Zugang.</strong></p>
+<p>Ein normaler StorageBox-Benutzer kann daher nicht davon ausgehen, dass er:</p>
+<ul>
+<li>Systempakete installieren,</li>
+<li>Systemdienste konfigurieren,</li>
+<li>Firewallregeln ändern,</li>
+<li>DirectAdmin selbst administrieren,</li>
+<li>den SSH-Daemon konfigurieren,</li>
+<li>beliebige Hintergrunddienste dauerhaft betreiben</li>
+</ul>
+<p>kann.</p>
+<p>Viele Seiten der offiziellen DirectAdmin-Dokumentation richten sich an Administratoren eigener DirectAdmin-Server. Diese Befehle sind auf einer HostBrr StorageBox nicht automatisch ausführbar.</p>
+<h2 id="14-geplanter-hostbrr-screenshot-menuatlas">14. Geplanter HostBrr-Screenshot-/Menüatlas<a class="headerlink" href="#14-geplanter-hostbrr-screenshot-menuatlas" title="Permanent link">&para;</a></h2>
+<p>Sobald wir Zugriff auf eine aktuelle StorageBox haben, soll dieser Artikel um einen <strong>StorageBox-spezifischen Menüatlas</strong> ergänzt werden:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>DirectAdmin
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>├── Account Manager
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>├── Advanced Features
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>├── System Info &amp; Files
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>├── Extra Features
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>└── ggf. Softaculous
+</code></pre></div>
+<p>Für jeden tatsächlich sichtbaren Menüpunkt dokumentieren wir dann:</p>
+<ul>
+<li>exakten Namen,</li>
+<li>Screenshot,</li>
+<li>Zweck,</li>
+<li>HostBrr-spezifische Einschränkungen,</li>
+<li>getestete Funktionen,</li>
+<li>Link zur offiziellen DirectAdmin-Dokumentation.</li>
+</ul>
+<p>Dadurch vermeiden wir, dass die KB lediglich eine allgemeine DirectAdmin-Anleitung wird.</p>
+<h2 id="15-checkliste-nach-bestellung-einer-storagebox">15. Checkliste nach Bestellung einer StorageBox<a class="headerlink" href="#15-checkliste-nach-bestellung-einer-storagebox" title="Permanent link">&para;</a></h2>
+<p>Nach Bereitstellung einer neuen StorageBox sollten wir zunächst erfassen:</p>
+<ul>
+<li>[ ] DirectAdmin-URL und Version</li>
+<li>[ ] Evolution-/Enhanced-Skin</li>
+<li>[ ] sichtbare Menüpunkte</li>
+<li>[ ] Speicherquota und Nutzung</li>
+<li>[ ] SSH aktiviert?</li>
+<li>[ ] SSH-Port</li>
+<li>[ ] SSH-Key-Verwaltung vorhanden?</li>
+<li>[ ] Cronjobs vorhanden?</li>
+<li>[ ] Domains/Subdomains möglich?</li>
+<li>[ ] SSL/ACME verfügbar?</li>
+<li>[ ] Datenbanktyp und Version</li>
+<li>[ ] Softaculous vorhanden?</li>
+<li>[ ] PHP-Version(en)</li>
+<li>[ ] File-Manager-Funktionen</li>
+<li>[ ] API/Live API Documentation sichtbar?</li>
+</ul>
+<p>Diese Daten werden später als <code>verified</code> mit StorageBox-Generation und Standort dokumentiert.</p>
+<h2 id="weiterfuhrende-dokumentation">Weiterführende Dokumentation<a class="headerlink" href="#weiterfuhrende-dokumentation" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://docs.directadmin.com/">DirectAdmin Documentation</a></li>
+<li><a href="https://docs.directadmin.com/directadmin/general-usage/">DirectAdmin – General Usage</a></li>
+<li><a href="https://docs.directadmin.com/directadmin/skins-and-templates/evolution.html">DirectAdmin – Evolution Skin</a></li>
+<li><a href="https://docs.directadmin.com/directadmin/general-usage/securing-da-panel.html">DirectAdmin – Securing DirectAdmin</a></li>
+<li><a href="https://docs.directadmin.com/directadmin/general-usage/directories-and-locations.html">DirectAdmin – Directories and Locations</a></li>
+<li><a href="https://docs.directadmin.com/webservices/ssl/ssl-and-letsencrypt-for-domains.html">DirectAdmin – SSL / Let's Encrypt</a></li>
+<li><a href="https://docs.directadmin.com/developer/api/">DirectAdmin – API Access</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Übersicht">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Übersicht
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../directadmin-ersteinrichtung/" class="md-footer__link md-footer__link--next" aria-label="Next: Ersteinrichtung">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Ersteinrichtung
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.path", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.action.edit", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
