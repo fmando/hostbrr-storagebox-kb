@@ -26,7 +26,7 @@ Deutschsprachige, **quellenbasierte** Wissensdatenbank zur **HostBrr StorageBox*
 
     [:octicons-arrow-right-24: Welche Methode?](03-backup/welche-backup-methode.md)
 
-- :material-life-buoy: __Server verloren?__
+- :material-lifebuoy: __Server verloren?__
 
     ---
 
@@ -154,7 +154,7 @@ Deutschsprachige, **quellenbasierte** Wissensdatenbank zur **HostBrr StorageBox*
 
     [:octicons-arrow-right-24: Synology](09-rezepte/synology.md) · [QNAP](09-rezepte/qnap.md)
 
-- :material-nextcloud: __Nextcloud__
+- :material-cloud-outline: __Nextcloud__
 
     ---
 
