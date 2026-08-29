@@ -14,7 +14,7 @@ Softaculous automatisiert typische Installationsschritte wie Dateien bereitstell
 
 Offizielle Website: https://www.softaculous.com/
 
-Dokumentation: https://www.softaculous.com/docs/
+Dokumentation: https://www.softaculous.com/docs
 
 ## Automatische Installation ersetzt keine Architekturentscheidung
 
@@ -76,6 +76,6 @@ Bei einer Deinstallation prüfen, ob Softaculous zusätzlich Datenbank und Daten
 ## Weiterführende Dokumentation
 
 - Softaculous: https://www.softaculous.com/
-- Softaculous Docs: https://www.softaculous.com/docs/
+- Softaculous Docs: https://www.softaculous.com/docs
 - Nextcloud Admin Manual: https://docs.nextcloud.com/server/latest/admin_manual/
 - Nextcloud Background Jobs: https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/background_jobs_configuration.html
